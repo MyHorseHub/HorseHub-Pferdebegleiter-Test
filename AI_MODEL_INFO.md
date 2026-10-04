@@ -13,3 +13,8 @@ The `flux-klein.js` code is MIT-licensed. The FLUX.2 Klein weights are distribut
 ## Worker-Fix 1.27.1 (Test)
 
 The browser previously attempted to construct the ONNX Runtime worker directly from jsDelivr, which fails on GitHub Pages due to the cross-origin Worker restriction. The test build now passes a same-origin `workerUrl` (`horsehub-ort-worker.js`) to the runtime. That local classic-worker shim imports the pinned upstream worker entry. This is a compatibility workaround to test in Chrome; verify on the target phone before relying on it in production.
+
+
+## Worker note for 1.27.2
+
+The local worker entry is a module worker and therefore uses an ES module `import`, not `importScripts()`. This corrects the exact error seen in 1.27.1. Upstream module loading still depends on CDN availability and CORS headers.

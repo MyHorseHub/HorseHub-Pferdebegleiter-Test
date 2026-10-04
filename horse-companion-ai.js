@@ -1,4 +1,4 @@
-/* HorseHub 1.27.0 – local AI lab engine.
+/* HorseHub 1.27.2 – local AI lab engine.
  * The actual inference runs in the browser. This module only loads the
  * WebGPU runtime on demand, when the user starts a generation.
  */
@@ -62,7 +62,7 @@
       engine = await createFluxKlein({
         mode: 'auto',
         base: MODEL_BASE,
-        workerUrl: new URL('./horsehub-ort-worker.js?v=1.27.1', window.location.href).href,
+        workerUrl: new URL('./horsehub-ort-worker.js?v=1.27.2', window.location.href).href,
         cacheDir: 'horsehub-ai-v1',
         decoder: 'tiny',
         oneThing: true,

@@ -1,6 +1,7 @@
-/* HorseHub 1.27.1 same-origin classic-worker shim.
- * Keep this file at the GitHub Pages root beside horse-companion-ai.js.
- * The upstream package worker is loaded as a classic worker script so the page
- * does not construct a Worker directly from the cross-origin CDN URL.
+/* HorseHub 1.27.2 worker entry.
+ * flux-klein.js creates this worker as a MODULE worker. Module workers must
+ * use import (not importScripts); importScripts() is only available to classic
+ * workers. Keep this entry on the same origin as the GitHub Pages app, then
+ * let the browser load the upstream module with CORS semantics.
  */
-importScripts('https://cdn.jsdelivr.net/npm/flux-klein.js@0.6.0/src/ort-worker.js');
+import 'https://cdn.jsdelivr.net/npm/flux-klein.js@0.6.0/src/ort-worker.js';

@@ -55,3 +55,10 @@ Der Prototyp arbeitet zunächst absichtlich mit 2 Schritten und dem „tiny“-D
 - `horsehub-ort-worker.js` is a small classic-worker shim that imports the pinned upstream ORT worker entry.
 - Test order: open `horse-companion-ai-lab.html`, confirm WebGPU OK, select the horse photo, use 256×256 / 2 steps, then start once. Confirm the previous `Failed to construct 'Worker'` error is gone. If a new error appears, copy the complete message.
 - This is a test workaround, not a claim that model inference has been verified on Android.
+
+
+## Version 1.27.2 – Module Worker Fix
+
+Fixes the previous test worker error: `importScripts()` cannot run inside a module worker. The same-origin worker entry now imports the pinned upstream worker as an ES module. This is a targeted compatibility fix; it still requires validation in Chrome on the target phone, and does not guarantee that model loading or inference will succeed.
+
+Test: open `horse-companion-ai-lab.html`, confirm WebGPU OK, choose 256x256 and 2 steps, then press Generate once. If it fails, copy the full status/error text. Do not clear the cache unless specifically instructed.
