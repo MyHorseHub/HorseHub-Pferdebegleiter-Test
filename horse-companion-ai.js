@@ -8,6 +8,9 @@
   const AI_KEY = 'hhCompanionPhotoAI_v1';
   const AI_META_KEY = 'hhCompanionPhotoAIMeta_v1';
   const MODULE_URL = 'https://cdn.jsdelivr.net/npm/flux-klein.js@0.6.0/+esm';
+  // Serve the Worker entry from this GitHub Pages origin. Direct cross-origin
+  // Worker construction from jsDelivr is blocked by browsers. The local shim
+  // imports the upstream ORT worker as a classic worker script.
   const MODEL_BASE = 'https://huggingface.co/radames/flux2-klein-edge-web/resolve/main';
 
   let engine = null;
@@ -59,6 +62,7 @@
       engine = await createFluxKlein({
         mode: 'auto',
         base: MODEL_BASE,
+        workerUrl: new URL('./horsehub-ort-worker.js?v=1.27.1', window.location.href).href,
         cacheDir: 'horsehub-ai-v1',
         decoder: 'tiny',
         oneThing: true,

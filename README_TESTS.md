@@ -48,3 +48,10 @@ Zusätzlich zu `horse-companion.js` und `horse-companion.css` gibt es jetzt ein 
 Wichtig: Die KI-Verarbeitung erfolgt im Browser. Die Modellgewichte werden für den ersten Start aus dem öffentlichen Model-Repository geladen; das Pferdefoto wird nicht an einen KI-Server hochgeladen. Der mobile Pfad von `flux-klein.js` ist für WebGPU und geringe Gerätespeicher ausgelegt, braucht aber trotzdem mehrere Gigabyte lokalen Speicher für die Modell-Dateien.
 
 Der Prototyp arbeitet zunächst absichtlich mit 2 Schritten und dem „tiny“-Decoder, damit der erste Test realistischer auf einem Telefon durchführbar ist. 512×512 + 4 Schritte + voller Decoder ist als separater Qualitätstest verfügbar und kann deutlich langsamer bzw. speicherintensiver sein.
+
+
+### HorseHub 1.27.1 – Worker-URL-Fix (Test)
+- Fixes the direct cross-origin Worker construction failure by configuring `workerUrl` to a same-origin GitHub Pages path.
+- `horsehub-ort-worker.js` is a small classic-worker shim that imports the pinned upstream ORT worker entry.
+- Test order: open `horse-companion-ai-lab.html`, confirm WebGPU OK, select the horse photo, use 256×256 / 2 steps, then start once. Confirm the previous `Failed to construct 'Worker'` error is gone. If a new error appears, copy the complete message.
+- This is a test workaround, not a claim that model inference has been verified on Android.
