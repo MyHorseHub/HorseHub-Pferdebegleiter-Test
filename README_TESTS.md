@@ -1,4 +1,4 @@
-# HorseHub 1.25.4 – Browser-Test
+# HorseHub 1.26.1 – Browser-Test
 
 ## Lokal ausführen
 
@@ -26,3 +26,9 @@ Neue, eigenständige Dateien: `horse-companion.css` und `horse-companion.js`. Di
 6. PWA vollständig schließen und erneut öffnen, um das aktualisierte Service-Worker-Cache-Verhalten zu prüfen.
 
 Einstellungen werden separat unter `hhCompanionSettings_v1` lokal gespeichert. Der Prototyp erzeugt keine Datenbanktabellen, verändert keine Pferde-/Aufgabendatensätze und verspricht keine automatischen Hintergrund-Push-Erinnerungen. „Erinnerung“ ist in diesem Stand eine manuell auslösbare Reaktion.
+
+
+### Pferdebegleiter 1.26.1
+- Settings panel includes camera/gallery upload for a dedicated companion photo.
+- Companion photo is resized locally and a lightweight local cartoon variant is generated.
+- UI offers Cartoon / Originalfoto display mode; companion settings/photo keys are isolated from horse/cloud sync.
