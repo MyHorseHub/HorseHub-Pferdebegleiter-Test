@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#111517">
+<title>HorseHub – Lokales KI-Testlabor</title>
+<style>
+:root{--bg:#f4efe7;--card:#fffdf8;--ink:#20221f;--muted:#73756e;--accent:#d9a21b;--dark:#111617;--line:#e4dccf;--ok:#4c7b59;--warn:#98611c}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}header{background:linear-gradient(145deg,#0d1213,#17201f);color:#fff;padding:20px 18px 22px}header .eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#e5bd45;font-weight:800}header h1{margin:5px 0 3px;font-size:27px}header p{margin:0;opacity:.82;line-height:1.45}main{max-width:900px;margin:auto;padding:16px 14px 42px}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin:12px 0;box-shadow:0 3px 14px #0000000b}h2{font-size:19px;margin:0 0 8px}h3{font-size:15px;margin:0 0 6px}p{line-height:1.5}.muted{color:var(--muted);font-size:13px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.preview{background:#eeebe4;border:1px solid var(--line);border-radius:14px;min-height:260px;display:flex;align-items:center;justify-content:center;overflow:hidden}.preview img{display:block;width:100%;height:100%;max-height:420px;object-fit:contain}.empty{padding:26px;text-align:center;color:var(--muted)}label{display:block;font-size:13px;font-weight:700;margin:10px 0 5px}select,input[type=file]{width:100%;padding:10px;border:1px solid var(--line);border-radius:11px;background:#fff;color:var(--ink);font:inherit}button{border:0;border-radius:12px;padding:11px 14px;background:var(--accent);color:#161616;font-weight:800;cursor:pointer}button.secondary{background:#ece8df;color:#333}button.danger{background:#a44d47;color:#fff}button:disabled{opacity:.55;cursor:not-allowed}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.status{padding:11px 12px;border-radius:11px;background:#f2eee6;border-left:4px solid var(--accent);font-size:13px;line-height:1.4;min-height:43px}.status.ok{border-left-color:var(--ok);background:#edf4ee}.status.warn{border-left-color:var(--warn);background:#fff4e4}.pill{display:inline-block;padding:5px 8px;border-radius:999px;background:#e9eee8;color:#35523d;font-size:11px;font-weight:800}.note{padding:10px 12px;border-radius:12px;background:#f5f1e9;color:#52564e;font-size:12px;line-height:1.45}.progress{height:8px;border-radius:99px;background:#ebe6dc;overflow:hidden;margin-top:8px}.progress>span{display:block;height:100%;width:8%;background:var(--accent);transition:width .25s ease}.model-box{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}.model-box b{display:block}.model-box small{color:var(--muted)}.check{display:flex;gap:9px;align-items:center;margin:8px 0;font-size:13px;font-weight:500}.check input{width:auto}.footer{color:var(--muted);font-size:11px;text-align:center;margin-top:18px}.back{display:inline-block;margin-top:10px;color:#dcb545;text-decoration:none;font-weight:700}@media(max-width:520px){.preview{min-height:210px}.card{padding:14px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">HorseHub 1.27.0 · isolierter Test</div>
+  <h1>✨ Lokales KI-Testlabor</h1>
+  <p>Aus deinem Pferdefoto soll ein wiedererkennbarer 3D-Animationsfilm-Begleiter entstehen – direkt im Browser auf deinem Gerät.</p>
+  <a class="back" href="./index.html">← zurück zu HorseHub</a>
+</header>
+<main>
+  <section class="card">
+    <h2>1. Gerät prüfen</h2>
+    <div class="model-box"><div><b>WebGPU</b><small>Die KI braucht die GPU des Browsers.</small></div><span id="gpuBadge" class="pill">prüfe …</span></div>
+    <div id="gpuNote" class="status" style="margin-top:10px">Prüfe Browser und GPU …</div>
+  </section>
+
+  <section class="card">
+    <h2>2. Pferd und Foto</h2>
+    <label for="horseSelect">Pferd auswählen</label>
+    <select id="horseSelect"></select>
+    <div class="actions">
+      <label style="margin:0;display:inline-flex;align-items:center;gap:8px;background:#ece8df;border-radius:12px;padding:11px 14px;cursor:pointer"><span>📷 Foto wählen</span><input id="photoInput" type="file" accept="image/*" style="display:none"></label>
+      <button id="useProfile" type="button" class="secondary">Profilfoto verwenden</button>
+    </div>
+    <div class="grid" style="margin-top:12px">
+      <div><h3>Referenz</h3><div id="sourcePreview" class="preview"><div class="empty">Noch kein Foto.</div></div></div>
+      <div><h3>KI-Ergebnis</h3><div id="resultPreview" class="preview"><div class="empty">Noch kein Ergebnis.</div></div></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>3. KI-Stil</h2>
+    <label for="styleSelect">Look</label>
+    <select id="styleSelect">
+      <option value="film">3D-Animationsfilm · empfohlen</option>
+      <option value="realism">3D + möglichst realistisch</option>
+      <option value="friendly">3D + freundlicher Begleiter</option>
+    </select>
+    <label for="qualitySelect">Testgröße</label>
+    <select id="qualitySelect">
+      <option value="256">256 × 256 · schneller Ersttest</option>
+      <option value="384" selected>384 × 384 · guter Kompromiss</option>
+      <option value="512">512 × 512 · höhere Qualität</option>
+    </select>
+    <label for="stepsSelect">Schritte</label>
+    <select id="stepsSelect">
+      <option value="2" selected>2 · schnell</option>
+      <option value="4">4 · schärfer, deutlich langsamer</option>
+    </select>
+    <label class="check"><input id="fullDecode" type="checkbox"> Vollständiger Decoder bei 512×512 (langsamer, aber detailreicher)</label>
+    <div class="note">Für den ersten Test bleibt der Bild-Decoder bewusst auf „tiny“. Der erzeugte Kopf wird nicht an einen Server gesendet; das Referenzfoto bleibt im Browser.</div>
+  </section>
+
+  <section class="card">
+    <h2>4. Lokale KI starten</h2>
+    <div id="status" class="status">Bereit. Zuerst ein Pferdefoto wählen.</div>
+    <div class="progress"><span id="progressBar"></span></div>
+    <div class="actions">
+      <button id="generateBtn" type="button">✨ KI-Bild erzeugen</button>
+      <button id="clearResultBtn" type="button" class="secondary">Ergebnis entfernen</button>
+      <button id="clearCacheBtn" type="button" class="danger">KI-Cache löschen</button>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Was beim ersten Lauf passiert</h2>
+    <p class="muted">Das Browser-Paket lädt die für Handys vorgesehenen quantisierten FLUX.2-Klein-Gewichte einmalig in den lokalen Gerätespeicher. Danach läuft die eigentliche Bildgenerierung auf der GPU/CPU des Geräts. Je nach Gerät können mehrere Gigabyte Modell-Daten und mehrere Minuten beim ersten Start anfallen.</p>
+    <div class="note">Diese Seite ist absichtlich ein Testlabor und greift nicht in die Pferde-/Cloud-Synchronisierung ein. Die erzeugte KI-Datei wird nur unter einem eigenen LocalStorage-Schlüssel gespeichert. HorseHub kann sie anschließend als Begleiterbild verwenden.</div>
+  </section>
+
+  <div class="footer">HorseHub 1.27.0 · Local AI Lab · keine Cloud-Bildverarbeitung in diesem Test</div>
+</main>
+<script src="./horse-companion-ai.js?v=1.27.0"></script>
+<script>
+(()=>{
+  'use strict';
+  const AI_KEY='hhCompanionPhotoAI_v1';
+  const META_KEY='hhCompanionPhotoAIMeta_v1';
+  const PHOTO_KEY='hhCompanionPhotoOriginal_v1';
+  const HORSE_KEY='horses';
+  const SETTINGS_KEY='hhCompanionSettings_v1';
+  const $=id=>document.getElementById(id);
+  let source='';
+  const read=(k,d)=>{try{return localStorage.getItem(k)||d}catch(_){return d}};
+  const readJson=(k,d)=>{try{return JSON.parse(localStorage.getItem(k)||JSON.stringify(d))}catch(_){return d}};
+  const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  function horses(){const hs=readJson(HORSE_KEY,[]);return Array.isArray(hs)?hs:[]}
+  function selectedHorse(){const hs=horses();const settings=readJson(SETTINGS_KEY,{});return hs.find(h=>String(h.id)===String(settings.horseId))||hs[0]||null}
+  function currentHorse(){const id=$('horseSelect').value;return horses().find(h=>String(h.id)===String(id))||selectedHorse()}
+  function setStatus(text,kind=''){const el=$('status');el.className='status '+kind;el.textContent=text}
+  function setProgress(f){$('progressBar').style.width=Math.max(0,Math.min(100,f*100))+'%'}
+  function renderSource(){const box=$('sourcePreview');box.innerHTML=source?`<img src="${source}" alt="Pferd Referenz">`:'<div class="empty">Noch kein Foto.</div>'}
+  function renderResult(){const src=read(AI_KEY,'');$('resultPreview').innerHTML=src?`<img src="${src}" alt="KI Ergebnis">`:'<div class="empty">Noch kein Ergebnis.</div>'}
+  function loadHorseOptions(){const hs=horses();const chosen=selectedHorse();$('horseSelect').innerHTML=hs.length?hs.map(h=>`<option value="${esc(h.id)}" ${chosen&&String(h.id)===String(chosen.id)?'selected':''}>${esc(h.name||'Unbenanntes Pferd')}</option>`).join(''):'<option value="">Noch kein Pferd angelegt</option>';const profile=selectedHorse()?.photo||'';const stored=read(PHOTO_KEY,'');source=stored||profile;renderSource();renderResult()}
+  function setSourceFromFile(file){if(!file)return;if(file.size>20*1024*1024){setStatus('Bitte ein Bild unter 20 MB wählen.','warn');return}const fr=new FileReader();fr.onload=()=>{source=fr.result;renderSource();localStorage.removeItem(AI_KEY);localStorage.removeItem(META_KEY);renderResult();setStatus('Foto übernommen. Bereit für den KI-Test.','ok')};fr.readAsDataURL(file)}
+  function setSourceFromProfile(){const h=currentHorse();if(!h?.photo){setStatus('Das ausgewählte Pferd hat kein gespeichertes Profilfoto.','warn');return}source=h.photo;localStorage.setItem(PHOTO_KEY,h.photo);localStorage.removeItem(AI_KEY);localStorage.removeItem(META_KEY);renderSource();renderResult();setStatus('Profilfoto als Referenz übernommen.','ok')}
+  async function run(){if(!source){setStatus('Bitte zuerst ein Pferdefoto auswählen oder das Profilfoto übernehmen.','warn');return}if(!window.HorseHubAI){setStatus('KI-Modul nicht geladen. Bitte Seite neu laden.','warn');return}const width=Number($('qualitySelect').value);const steps=Number($('stepsSelect').value);const fullDecode=$('fullDecode').checked;const style=$('styleSelect').value;$('generateBtn').disabled=true;$('clearCacheBtn').disabled=true;setProgress(.02);setStatus('Starte lokale KI …');const onStatus=e=>{const msg=e.detail||'KI läuft …';setStatus(msg);const m=String(msg).match(/(\d+)%/);if(m)setProgress(Number(m[1])/100)};window.addEventListener('hh-ai-status',onStatus);try{const result=await window.HorseHubAI.generate({source,width,steps,style,fullDecode});if(result){$('resultPreview').innerHTML=`<img src="${result}" alt="Lokales KI Ergebnis">`;setStatus('Fertig. Das KI-Bild wurde lokal gespeichert. In HorseHub kann jetzt „KI-3D-Filmstil“ verwendet werden.','ok');setProgress(1)}else throw new Error('Keine Bildausgabe erhalten.')}catch(err){console.error(err);setStatus('KI-Test fehlgeschlagen: '+(err?.message||String(err)),'warn');setProgress(0)}finally{window.removeEventListener('hh-ai-status',onStatus);$('generateBtn').disabled=false;$('clearCacheBtn').disabled=false}}
+  function clearResult(){localStorage.removeItem(AI_KEY);localStorage.removeItem(META_KEY);renderResult();setStatus('KI-Ergebnis entfernt. Das Referenzfoto bleibt erhalten.','ok');setProgress(0);window.dispatchEvent(new Event('hh-ai-updated'))}
+  async function clearCache(){try{await window.HorseHubAI.clearCache();localStorage.removeItem(AI_KEY);localStorage.removeItem(META_KEY);renderResult();setStatus('Lokaler KI-Cache wurde entfernt. Beim nächsten Lauf müssen die Modell-Dateien erneut geladen werden.','ok');setProgress(0)}catch(err){setStatus(err?.message||String(err),'warn')}}
+  function checkGpu(){const supported=window.HorseHubAI?.isSupported?.()??('gpu' in navigator);$('gpuBadge').textContent=supported?'WebGPU OK':'kein WebGPU';$('gpuBadge').style.background=supported?'#e9eee8':'#fff0dc';$('gpuBadge').style.color=supported?'#35523d':'#7b5423';$('gpuNote').className='status '+(supported?'ok':'warn');$('gpuNote').textContent=supported?'WebGPU ist im Browser verfügbar. Der lokale KI-Test kann gestartet werden.':'WebGPU ist hier nicht verfügbar. Bitte Chrome/Edge aktualisieren bzw. WebGPU aktivieren.'}
+  $('photoInput').addEventListener('change',e=>setSourceFromFile(e.target.files?.[0]));$('useProfile').addEventListener('click',setSourceFromProfile);$('horseSelect').addEventListener('change',()=>{const h=currentHorse();if(h?.photo){source=h.photo;localStorage.setItem(PHOTO_KEY,h.photo);renderSource()} });$('generateBtn').addEventListener('click',run);$('clearResultBtn').addEventListener('click',clearResult);$('clearCacheBtn').addEventListener('click',clearCache);window.addEventListener('hh-ai-status',e=>{if(e.detail) setStatus(e.detail)});window.addEventListener('storage',e=>{if([HORSE_KEY,PHOTO_KEY,AI_KEY].includes(e.key)){loadHorseOptions()}});loadHorseOptions();checkGpu();
+})();
+</script>
+</body>
+</html>
