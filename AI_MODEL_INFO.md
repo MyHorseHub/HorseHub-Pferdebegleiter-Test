@@ -18,3 +18,7 @@ The browser previously attempted to construct the ONNX Runtime worker directly f
 ## Worker note for 1.27.2
 
 The local worker entry is a module worker and therefore uses an ES module `import`, not `importScripts()`. This corrects the exact error seen in 1.27.1. Upstream module loading still depends on CDN availability and CORS headers.
+
+
+## Version 1.27.3 – explicit ONNX Runtime URL
+The previous error `Failed to resolve module specifier 'onnxruntime-web/wasm'` was caused by a browser worker receiving an npm bare module specifier. 1.27.3 passes an explicit browser URL for ONNX Runtime Web (1.30.0) via `ortUrl` and the corresponding `dist/` path via `wasmPaths`. ONNX Runtime documents both the browser import and explicit WASM asset path configuration. The ORT version is pinned for reproducible testing; it can be changed after compatibility is confirmed.

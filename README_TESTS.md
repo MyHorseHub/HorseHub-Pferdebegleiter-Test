@@ -62,3 +62,7 @@ Der Prototyp arbeitet zunächst absichtlich mit 2 Schritten und dem „tiny“-D
 Fixes the previous test worker error: `importScripts()` cannot run inside a module worker. The same-origin worker entry now imports the pinned upstream worker as an ES module. This is a targeted compatibility fix; it still requires validation in Chrome on the target phone, and does not guarantee that model loading or inference will succeed.
 
 Test: open `horse-companion-ai-lab.html`, confirm WebGPU OK, choose 256x256 and 2 steps, then press Generate once. If it fails, copy the full status/error text. Do not clear the cache unless specifically instructed.
+
+
+## 1.27.3 diagnostic target
+This build specifically targets the error: `Failed to resolve module specifier 'onnxruntime-web/wasm'`. The test should confirm that the error disappears and that the next stage (model/runtime loading) is reached. Keep 256x256 and 2 steps for the first run. Do not clear the AI cache before testing.

@@ -6,6 +6,9 @@
   'use strict';
 
   const AI_KEY = 'hhCompanionPhotoAI_v1';
+  const ORT_VERSION = '1.30.0';
+  const ORT_URL = `https://cdn.jsdelivr.net/npm/onnxruntime-web@${ORT_VERSION}/+esm`;
+  const ORT_WASM_PATH = `https://cdn.jsdelivr.net/npm/onnxruntime-web@${ORT_VERSION}/dist/`;
   const AI_META_KEY = 'hhCompanionPhotoAIMeta_v1';
   const MODULE_URL = 'https://cdn.jsdelivr.net/npm/flux-klein.js@0.6.0/+esm';
   // Serve the Worker entry from this GitHub Pages origin. Direct cross-origin
@@ -62,7 +65,12 @@
       engine = await createFluxKlein({
         mode: 'auto',
         base: MODEL_BASE,
-        workerUrl: new URL('./horsehub-ort-worker.js?v=1.27.2', window.location.href).href,
+        workerUrl: new URL('./horsehub-ort-worker.js?v=1.27.3', window.location.href).href,
+        // flux-klein's mobile ONNX workers otherwise import the npm bare
+        // specifier `onnxruntime-web/wasm`, which a static browser cannot resolve.
+        // Give the runtime an explicit browser-resolvable ORT module URL.
+        ortUrl: ORT_URL,
+        wasmPaths: ORT_WASM_PATH,
         cacheDir: 'horsehub-ai-v1',
         decoder: 'tiny',
         oneThing: true,
