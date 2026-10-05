@@ -1,4 +1,4 @@
-/* HorseHub 1.39.0 – abgestimmter 2D Andalusier Kopf/Hals. */
+/* HorseHub 1.40.0 – abgestimmter 2D Andalusier Kopf/Hals. */
 #hh-companion-root{position:fixed;inset:0;pointer-events:none;z-index:9999;font-family:inherit}
 #hh-companion-trigger{pointer-events:auto;position:fixed;right:16px;bottom:calc(76px + env(safe-area-inset-bottom));width:130px;height:160px;border:0;background:transparent;padding:0;cursor:grab;filter:drop-shadow(0 10px 14px #0003);touch-action:none;user-select:none;-webkit-user-select:none;transition:filter .18s ease,opacity .2s ease}
 #hh-companion-trigger.manual{right:auto;bottom:auto}#hh-companion-trigger.dragging{cursor:grabbing;filter:drop-shadow(0 13px 20px #0004)}
@@ -27,13 +27,13 @@
 #hh-companion-panel{pointer-events:auto;position:fixed;right:14px;bottom:calc(212px + env(safe-area-inset-bottom));width:min(390px,calc(100vw - 28px));max-height:min(72vh,650px);overflow:auto;background:#fffdf9;border:1px solid #d9cdbd;border-radius:20px;padding:15px;box-shadow:0 14px 38px #0003;z-index:10001}.hh-muted{color:#6d665e;font-size:13px}.hh-companion-panel-title{display:flex;justify-content:space-between;align-items:center}.hh-section{margin-top:14px}.hh-row-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.hh-row-actions button{flex:1;min-width:120px}.hh-check{display:flex;gap:8px;align-items:center;padding:6px 0;font-size:13px}.hh-check input{width:auto}.hh-companion-status{margin-top:8px;padding:8px 10px;border-radius:10px;background:#e8f4e8;color:#245b2b;font-size:12px}.hh-companion-status.off{background:#f5e9e6;color:#7b3026}
 .hh-settings-inline{display:grid;grid-template-columns:100px 1fr;gap:12px;align-items:start}.hh-settings-inline-photo{width:100px;height:100px;border-radius:14px;background:#eee8dc;overflow:hidden;display:grid;place-items:center}.hh-settings-inline-photo .hh-vector-wrap{width:100%;height:100%}.hh-selection-note{font-size:12px;color:#6d665e;margin-top:6px}
 @media(max-width:480px){#hh-companion-trigger{right:9px}.hh-companion-bubble{max-width:220px}#hh-companion-panel{right:8px;width:calc(100vw - 16px);bottom:calc(190px + env(safe-area-inset-bottom))}}
-/* 1.39.0 – Kopf/Hals-Fokus: ein sauberer, leichter 2D-Kopf-Rig. */
+/* 1.40.0 – Kopf/Hals-Fokus: ein sauberer, leichter 2D-Kopf-Rig. */
 .hh-head-only{width:100%;height:100%;position:relative;display:grid;place-items:end center;overflow:visible}
 .hh-photo-neck-motion{position:relative;width:100%;height:100%;display:flex;align-items:flex-end;justify-content:center;transform-box:border-box;transform-origin:58% 82%;will-change:transform}
 .hh-photo-rig{position:relative;width:100%;height:100%;display:flex;align-items:flex-end;justify-content:center;transform-box:border-box;will-change:transform}
 .hh-photo-head-motion{position:relative;width:100%;height:100%;display:flex;align-items:flex-end;justify-content:center;transform-box:border-box;transform-origin:68% 58%;will-change:transform}
 .hh-photo-base{width:100%;height:100%;object-fit:contain;object-position:center bottom;display:block;pointer-events:none;user-select:none;-webkit-user-drag:none;filter:drop-shadow(0 8px 8px rgba(0,0,0,.18))}
-.hh-photo-ear{position:absolute;inset:0;display:block;pointer-events:none;z-index:3;background-image:url('andalusier-head-neck-clean.png?v=1.39.0');background-repeat:no-repeat;background-size:100% 100%;background-position:center bottom;will-change:transform;transform-box:border-box}
+.hh-photo-ear{position:absolute;inset:0;display:block;pointer-events:none;z-index:3;background-image:url('andalusier-head-neck-clean.png?v=1.40.0');background-repeat:no-repeat;background-size:100% 100%;background-position:center bottom;will-change:transform;transform-box:border-box}
 .hh-photo-ear-l{clip-path:polygon(54% 0,70% 0,71% 16%,68% 28%,60% 25%,54% 12%);transform-origin:62% 22%}
 .hh-photo-ear-r{clip-path:polygon(78% 0,94% 0,95% 20%,92% 29%,84% 25%,79% 12%);transform-origin:86% 22%}
 .hh-photo-lid{position:absolute;display:block;pointer-events:none;z-index:5;width:8.2%;height:5.8%;top:35.8%;border-radius:50%;background:radial-gradient(ellipse at 50% 65%,#241914 0 58%,#4a3027 72%,transparent 74%);opacity:.02;transform-origin:50% 72%;will-change:transform,opacity}
@@ -62,3 +62,6 @@
 
 .hh-photo-head-motion.hh-head-nod{animation:hh-photo-head-nod 2.5s cubic-bezier(.22,.7,.25,1) both}
 @keyframes hh-photo-head-nod{0%,100%{transform:rotate(0) translateY(0)}26%{transform:rotate(.5deg) translateY(3px)}50%{transform:rotate(-.2deg) translateY(7px)}66%{transform:rotate(.16deg) translateY(2px)}82%{transform:rotate(0) translateY(0)}}
+
+/* 1.40.0 – Die Ohren bleiben exakt Bestandteil des Originalbildes; keine versetzten Overlay-Ebenen. */
+.hh-photo-ear{display:none !important}

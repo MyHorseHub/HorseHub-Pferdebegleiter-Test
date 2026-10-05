@@ -23,7 +23,7 @@ function resetDrag(){settings.dragX=null;settings.dragY=null;settings.position='
 function clearTimers(){timers.forEach(clearTimeout);timers=[]}
 function later(fn,min,max){const ms=Math.round(min+Math.random()*(max-min));const id=setTimeout(()=>{timers=timers.filter(x=>x!==id);fn()},ms);timers.push(id)}
 function pulse(el,cls,duration=900){if(!el)return;el.classList.remove(cls);void el.offsetWidth;el.classList.add(cls);setTimeout(()=>el.classList.remove(cls),duration)}
-function horseSvg(){const p=profile();return `<div class="hh-photo-wrap hh-head-only" aria-label="${esc(p.name)}"><div class="hh-photo-neck-motion"><div class="hh-photo-rig"><div class="hh-photo-head-motion"><img class="hh-photo-base" src="andalusier-head-neck-clean.png?v=1.39.0" alt="A – Andalusier (Rappe), Kopf und Hals"><span class="hh-photo-ear hh-photo-ear-l" aria-hidden="true"></span><span class="hh-photo-ear hh-photo-ear-r" aria-hidden="true"></span><span class="hh-photo-lid hh-photo-lid-l" aria-hidden="true"></span><span class="hh-photo-lid hh-photo-lid-r" aria-hidden="true"></span></div></div></div></div>`}
+function horseSvg(){const p=profile();return `<div class="hh-photo-wrap hh-head-only" aria-label="${esc(p.name)}"><div class="hh-photo-neck-motion"><div class="hh-photo-rig"><div class="hh-photo-head-motion"><img class="hh-photo-base" src="andalusier-head-neck-clean.png?v=1.39.0" alt="A – Andalusier (Rappe), Kopf und Hals"><span class="hh-photo-lid hh-photo-lid-l" aria-hidden="true"></span><span class="hh-photo-lid hh-photo-lid-r" aria-hidden="true"></span></div></div></div></div>`}
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function displayClass(){return mood==='happy'?'hh-reaction-happy':mood==='curious'?'hh-reaction-curious':mood==='reminder'?'hh-reaction-reminder':mood==='calm'?'hh-reaction-calm':''}
 function greeting(){const messages={friendly:['Hallo! Schön, dass du da bist.','Wie schön, dich zu sehen!','Ich bin bei dir – was steht heute an?'],curious:['Was schauen wir uns als Nächstes an?','Ich bin neugierig auf deinen Stalltag!'],happy:['Juhu, das hast du toll gemacht!','Super erledigt – weiter so!'],reminder:['Psst … schau doch kurz auf deine heutigen Aufgaben.','Kleiner Hinweis: Vielleicht steht bald etwas im Kalender an.']};const a=messages[mood]||messages.friendly;return {title:'HorseHub',text:a[Math.floor(Math.random()*a.length)]}}
@@ -72,6 +72,7 @@ function startIdleController(){
     window.setTimeout(()=>{headBusy=false},duration+180);
   };
   const earAction=()=>{
+    return;
     if(earBusy||!settings.enabled)return;
     earBusy=true;
     const mode=Math.random();
