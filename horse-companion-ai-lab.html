@@ -12,7 +12,7 @@
 </head>
 <body>
 <header>
-  <div class="eyebrow">HorseHub 1.27.3 · isolierter Test</div>
+  <div class="eyebrow">HorseHub 1.28.0 · stabiler KI-Test</div>
   <h1>✨ Lokales KI-Testlabor</h1>
   <p>Aus deinem Pferdefoto soll ein wiedererkennbarer 3D-Animationsfilm-Begleiter entstehen – direkt im Browser auf deinem Gerät.</p>
   <a class="back" href="./index.html">← zurück zu HorseHub</a>
@@ -49,15 +49,15 @@
     <label for="qualitySelect">Testgröße</label>
     <select id="qualitySelect">
       <option value="256">256 × 256 · schneller Ersttest</option>
-      <option value="384" selected>384 × 384 · guter Kompromiss</option>
+      <option value="384" selected>384 × 384 · empfohlen</option>
       <option value="512">512 × 512 · höhere Qualität</option>
     </select>
     <label for="stepsSelect">Schritte</label>
     <select id="stepsSelect">
-      <option value="2" selected>2 · schnell</option>
-      <option value="4">4 · schärfer, deutlich langsamer</option>
+      <option value="2">2 · schnell</option>
+      <option value="4" selected>4 · stabiler Qualitätsmodus</option>
     </select>
-    <label class="check"><input id="fullDecode" type="checkbox"> Vollständiger Decoder bei 512×512 (langsamer, aber detailreicher)</label>
+    <label class="check"><input id="fullDecode" type="checkbox"> Vollständiger Decoder bei 512×512 (experimentell – kann die Geräte-GPU überlasten)</label>
     <div class="note">Für den ersten Test bleibt der Bild-Decoder bewusst auf „tiny“. Der erzeugte Kopf wird nicht an einen Server gesendet; das Referenzfoto bleibt im Browser.</div>
   </section>
 
@@ -78,9 +78,9 @@
     <div class="note">Diese Seite ist absichtlich ein Testlabor und greift nicht in die Pferde-/Cloud-Synchronisierung ein. Die erzeugte KI-Datei wird nur unter einem eigenen LocalStorage-Schlüssel gespeichert. HorseHub kann sie anschließend als Begleiterbild verwenden.</div>
   </section>
 
-  <div class="footer">HorseHub 1.27.3 · Local AI Lab · keine Cloud-Bildverarbeitung in diesem Test</div>
+  <div class="footer">HorseHub 1.28.0 · Local AI Lab · keine Cloud-Bildverarbeitung in diesem Test</div>
 </main>
-<script src="./horse-companion-ai.js?v=1.27.3"></script>
+<script src="./horse-companion-ai.js?v=1.28.0"></script>
 <script>
 (()=>{
   'use strict';

@@ -1,4 +1,4 @@
-/* HorseHub 1.27.2 – local AI lab engine.
+/* HorseHub 1.28.0 – local AI engine.
  * The actual inference runs in the browser. This module only loads the
  * WebGPU runtime on demand, when the user starts a generation.
  */
@@ -98,7 +98,7 @@
     return variants[style] || variants.film;
   }
 
-  async function generate({ source, width = 384, steps = 2, style = 'film', fullDecode = false }) {
+  async function generate({ source, width = 384, steps = 2, style = 'film', fullDecode = false, persist = true }) {
     if (!source) throw new Error('Kein Pferdefoto vorhanden.');
     const klein = await ensureEngine();
     const maxArea = Number(klein?.limits?.maxArea || width * width);
@@ -110,7 +110,7 @@
       setStatus('Referenzfoto wird für die KI vorbereitet …');
       const reference = await klein.encodeReference(refBitmap, { width, height: width });
       const prompt = buildPrompt(style);
-      const seed = Math.floor(Math.random() * 2147483647);
+      const seed = 424242;
       setStatus(`Bild wird erzeugt (${width}×${width}, ${steps} Schritte) …`);
       const result = await klein.generate({
         prompt,
@@ -124,8 +124,8 @@
       const imageData = typeof modToImageData === 'function' ? modToImageData(result) : null;
       if (!imageData) throw new Error('KI-Ausgabe konnte nicht in ein Bild umgewandelt werden.');
       const dataUrl = imageDataToJpeg(imageData, 0.92);
-      localStorage.setItem(AI_KEY, dataUrl);
-      localStorage.setItem(AI_META_KEY, JSON.stringify({
+      if (persist) { localStorage.setItem(AI_KEY, dataUrl); }
+      if (persist) localStorage.setItem(AI_META_KEY, JSON.stringify({
         createdAt: new Date().toISOString(),
         width,
         height: width,
@@ -134,7 +134,7 @@
         style,
         prompt
       }));
-      setStatus('Fertig – KI-Bild wurde nur lokal gespeichert.');
+      setStatus(persist ? 'Fertig – KI-Bild wurde nur lokal gespeichert.' : 'Fertig – KI-Bild wurde lokal erzeugt.');
       window.dispatchEvent(new Event('hh-ai-updated'));
       return dataUrl;
     } finally {

@@ -66,3 +66,30 @@ Test: open `horse-companion-ai-lab.html`, confirm WebGPU OK, choose 256x256 and 
 
 ## 1.27.3 diagnostic target
 This build specifically targets the error: `Failed to resolve module specifier 'onnxruntime-web/wasm'`. The test should confirm that the error disappears and that the next stage (model/runtime loading) is reached. Keep 256x256 and 2 steps for the first run. Do not clear the AI cache before testing.
+
+
+## HorseHub 1.28.0 – robuster integrierter KI-Pferdebegleiter
+
+Der erfolgreiche lokale KI-Lauf wurde aus dem isolierten Testlabor in den Pferdebegleiter integriert.
+
+### Stabiler Standard
+- 384×384
+- 4 Schritte
+- tiny decoder
+- WebGPU lokal auf dem Gerät
+- Referenzfoto bleibt lokal
+- kein Upload des Pferdefotos an einen Bild-KI-Dienst
+
+### Pro-Pferd-Speicherung
+Begleiterdaten werden nicht mehr global unter einem einzigen Foto-Schlüssel gespeichert. Jedes Pferd erhält einen eigenen Eintrag in einer lokalen IndexedDB-Datenbank (`HorseHubCompanionDB_v2`). Dadurch können mehrere Pferde unterschiedliche Begleiterfotos und KI-Ergebnisse haben, ohne sich gegenseitig zu überschreiben. Bei nicht verfügbarer IndexedDB gibt es einen begrenzten LocalStorage-Fallback.
+
+### Fallback
+Wenn WebGPU fehlt oder die lokale KI fehlschlägt, bleibt der Begleiter nutzbar. Er fällt auf Cartoon bzw. Originalfoto zurück. Ein bereits vorhandenes KI-Bild wird bei einem späteren Fehler nicht gelöscht. Ein GPU-Device-Lost-Fehler blockiert daher nicht die restliche HorseHub-App.
+
+### KI-Bild im Hauptmenü
+In den Pferdebegleiter-Einstellungen kann die KI direkt gestartet werden. Das separate KI-Testlabor bleibt als Diagnosewerkzeug verfügbar.
+
+### Wichtiger Test
+Nach dem Update zuerst ein Pferd auswählen, ein Begleiterfoto hinterlegen und `3D-Begleiter erstellen` drücken. Erwartet wird eine Generierung mit 384×384 und 4 Schritten. Danach App neu laden und prüfen, ob das KI-Bild beim gleichen Pferd erhalten bleibt. Anschließend auf ein anderes Pferd wechseln und prüfen, dass dessen Begleiterdaten getrennt sind.
+
+512×512 bleibt bewusst experimentell und ist nicht Teil des normalen Begleiter-Modus, weil auf dem Testgerät wiederholt `GPUBuffer: [Device] is lost` auftrat.

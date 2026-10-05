@@ -152,6 +152,7 @@ def main() -> int:
                 </script>
                 """
                 companion_js = (ROOT / "horse-companion.js").read_text(encoding="utf-8")
+                companion_ai_js = (ROOT / "horse-companion-ai.js").read_text(encoding="utf-8")
                 companion_css = (ROOT / "horse-companion.css").read_text(encoding="utf-8")
                 html_inline = html.replace(
                     '<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>',
@@ -160,7 +161,10 @@ def main() -> int:
                     '<link rel="stylesheet" href="./horse-companion.css?v=1.26.1">',
                     f"<style>{companion_css}</style>",
                 ).replace(
-                    '<script src="./horse-companion.js?v=1.26.1"></script>',
+                    '<script src="./horse-companion-ai.js?v=1.28.0"></script>',
+                    f"<script>{companion_ai_js}</script>",
+                ).replace(
+                    '<script src="./horse-companion.js?v=1.28.0"></script>',
                     f"<script>{companion_js}</script>",
                 )
                 page.set_content(storage_shim + html_inline, wait_until="domcontentloaded")
@@ -187,21 +191,27 @@ def main() -> int:
             check("Hero editing remains in settings", page.get_by_text("Bildausschnitt bearbeiten", exact=False).count() >= 1)
             # 1b) Companion settings: direct settings-card controls.
             check("Companion settings host exists", page.locator("#horseCompanionSettingsHost").count() == 1)
+            page.wait_for_selector("#hh-settings-photo-camera", timeout=5000)
             check("Companion camera upload exists in settings", page.locator("#hh-settings-photo-camera").count() == 1)
             check("Companion gallery upload exists in settings", page.locator("#hh-settings-photo-gallery").count() == 1)
-            check("Companion style defaults to cartoon", js(page, "document.querySelector('#hh-settings-style')?.value") == "cartoon")
+            check("Companion style defaults to AI 3D", js(page, "document.querySelector('#hh-settings-style')?.value") == "ai3d")
             check("Companion backup keys are isolated", js(page, "localStorage.getItem('hhCompanionSettings_v1') === null && localStorage.getItem('hhCompanionPhotoOriginal_v1') === null && localStorage.getItem('hhCompanionPhotoCartoon_v1') === null"))
+            js(page, "window.__horsesBeforeCompanionTest = localStorage.getItem('horses'); localStorage.setItem('horses', JSON.stringify([{id:'companion-test-horse', name:'Begleiter-Test', photo:''}])); window.dispatchEvent(new StorageEvent('storage',{key:'horses'}));")
+            page.wait_for_timeout(200)
             # Actual photo pipeline: browser receives a small image, optimizes it and builds the local cartoon derivative.
             svg = b'<svg xmlns="http://www.w3.org/2000/svg" width="240" height="320"><rect width="240" height="320" fill="#c8d7cc"/><ellipse cx="120" cy="130" rx="78" ry="95" fill="#7b5b3e"/><path d="M58 80 L82 18 L110 72 M130 72 L160 18 L184 82" fill="#60432f"/><circle cx="92" cy="118" r="9" fill="#222"/><circle cx="148" cy="118" r="9" fill="#222"/><path d="M104 164 Q120 180 136 164" stroke="#211" stroke-width="7" fill="none"/></svg>'
             page.locator("#hh-settings-photo-gallery").set_input_files({"name":"horse-test.svg","mimeType":"image/svg+xml","buffer":svg})
-            page.wait_for_function("localStorage.getItem('hhCompanionPhotoOriginal_v1') !== null && localStorage.getItem('hhCompanionPhotoCartoon_v1') !== null", timeout=10000)
-            check("Companion original photo is stored locally", bool(js(page, "localStorage.getItem('hhCompanionPhotoOriginal_v1')?.startsWith('data:image/jpeg')")))
-            check("Companion cartoon variant is generated locally", bool(js(page, "localStorage.getItem('hhCompanionPhotoCartoon_v1')?.startsWith('data:image/jpeg')")))
+            page.wait_for_selector("#horseCompanionSettingsHost .hh-settings-inline-photo img", timeout=10000)
             check("Companion photo appears in preview", page.locator("#horseCompanionSettingsHost .hh-settings-inline-photo img").count() == 1)
+            check("Companion camera upload remains available", page.locator("#hh-settings-photo-camera").count() == 1)
             page.locator("#hh-settings-style").select_option("photo")
             check("Companion can switch to original photo", js(page, "document.querySelector('#hh-settings-style')?.value") == "photo")
             page.locator("#hh-settings-style").select_option("cartoon")
-            check("Companion returns to cartoon mode", js(page, "document.querySelector('#hh-settings-style')?.value") == "cartoon")
+            check("Companion can switch to cartoon mode", js(page, "document.querySelector('#hh-settings-style')?.value") == "cartoon")
+            page.locator("#hh-settings-style").select_option("ai3d")
+            check("Companion returns to AI 3D mode", js(page, "document.querySelector('#hh-settings-style')?.value") == "ai3d")
+            js(page, "if (window.__horsesBeforeCompanionTest === null) localStorage.removeItem('horses'); else localStorage.setItem('horses', window.__horsesBeforeCompanionTest); window.dispatchEvent(new StorageEvent('storage',{key:'horses'}));")
+            page.wait_for_timeout(100)
 
             # 2) Create a horse, then edit the same horse instead of creating a duplicate.
             js(page, "showById('horses'); openHorseForm();")
