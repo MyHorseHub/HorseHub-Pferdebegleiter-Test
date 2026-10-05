@@ -61,14 +61,14 @@ Hinweis: Das ist bewusst zunächst ein technisch robuster 2D-Prototyp. Die endg�
 - Kopf, Hals, synchrones Blinzeln und Kopfnicken bleiben aktiv.
 
 
-### 1.43.0 – Präziser Blink
+### 1.44.0 – Präziser Blink
 - Blink-Patches direkt aus der freigegebenen Originalvorlage abgeleitet.
 - Linkes und rechtes Auge separat auf die tatsächlichen Augenöffnungen ausgerichtet.
 - Kein Verschieben/Skalieren beim Blinzeln; stattdessen wird die passende Hauttextur von oben nach unten eingeblendet.
 - Beide Augen werden weiterhin exakt gleichzeitig ausgelöst.
 
 
-## 1.43.0 – Augenkoordinaten nach Augäpfeln korrigiert
+## 1.44.0 – vollständig geschlossenes Blinzeln nach Augäpfeln korrigiert
 - Originalbild unverändert.
 - Kopfcontainer nutzt jetzt exakt das Seitenverhältnis des Originalbildes, damit Overlay-Koordinaten nicht durch object-fit verschoben werden.
 - Linkes und rechtes Blinzeln wurden anhand der sichtbaren Augäpfel neu positioniert.

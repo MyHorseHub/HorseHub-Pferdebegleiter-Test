@@ -158,13 +158,13 @@ def main() -> int:
                     '<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>',
                     f"<script>{SUPABASE_STUB}</script>",
                 ).replace(
-                    '<link rel="stylesheet" href="./horse-companion.css?v=1.37.0">',
+                    '<link rel="stylesheet" href="./horse-companion.css?v=1.43.0">',
                     f"<style>{companion_css}</style>",
                 ).replace(
-                    '<script src="./companion-db.js?v=1.37.0"></script>',
+                    '<script src="./companion-db.js?v=1.43.0"></script>',
                     f"<script>{companion_db_js}</script>",
                 ).replace(
-                    '<script src="./horse-companion.js?v=1.37.0"></script>',
+                    '<script src="./horse-companion.js?v=1.43.0"></script>',
                     f"<script>{companion_js}</script>",
                 )
                 page.set_content(storage_shim + html_inline, wait_until="domcontentloaded")
