@@ -1,4 +1,4 @@
-"""HorseHub 1.30.0 browser smoke test.
+"""HorseHub 1.33.0 browser smoke test.
 
 Runs the real PWA HTML in Chromium with a local HTTP server. The Supabase CDN
 script is replaced by a tiny in-browser stub so the test is deterministic and
@@ -195,9 +195,9 @@ def main() -> int:
             check("AI companion script is absent", not (ROOT / "horse-companion-ai.js").exists())
             check("AI test lab is absent", not (ROOT / "horse-companion-ai-lab.html").exists())
             check("ONNX worker is absent", not (ROOT / "horsehub-ort-worker.js").exists())
-            page.wait_for_selector("#hh-companion-face svg", timeout=5000)
-            check("Companion SVG is rendered", page.locator("#hh-companion-face svg").count() == 1)
-            check("Horse animation classes are present", js(page, "document.querySelector('#hh-companion-face .hh-ear-l') !== null && document.querySelector('#hh-companion-face .hh-eye') !== null && document.querySelector('#hh-companion-face .hh-tail') !== null && document.querySelector('#hh-companion-face .hh-head') !== null"))
+            page.wait_for_selector("#hh-companion-face .hh-photo-base", timeout=5000)
+            check("Realistic Andalusian image is rendered", page.locator("#hh-companion-face .hh-photo-base").count() == 1)
+            check("Horse animation layers are present", js(page, "document.querySelector('#hh-companion-face .hh-photo-ear-l') !== null && document.querySelector('#hh-companion-face .hh-photo-ear-r') !== null && document.querySelector('#hh-companion-face .hh-photo-lid-l') !== null && document.querySelector('#hh-companion-face .hh-photo-rig') !== null"))
             check("No per-horse selection UI remains", page.locator("#hh-companion-panel .hh-catalog-card").count() == 0 and page.locator("#hh-horse-select").count() == 0)
             check("Fixed companion wording is visible", page.get_by_text("Ein fester Begleiter für die gesamte App", exact=False).count() >= 1)
             # Direct drag positioning must work and persist locally.
@@ -207,7 +207,7 @@ def main() -> int:
             sx=box["x"]+box["width"]/2; sy=box["y"]+box["height"]/2
             page.mouse.move(sx,sy); page.mouse.down(); page.mouse.move(80,220,steps=8); page.mouse.up()
             page.wait_for_timeout(100)
-            check("Companion can be dragged", js(page, "Number.isFinite(JSON.parse(localStorage.getItem('hhCompanionSettings_v4')||'{}').dragX) && Number.isFinite(JSON.parse(localStorage.getItem('hhCompanionSettings_v4')||'{}').dragY)"))
+            check("Companion can be dragged", js(page, "Number.isFinite(JSON.parse(localStorage.getItem('hhCompanionSettings_v5')||'{}').dragX) && Number.isFinite(JSON.parse(localStorage.getItem('hhCompanionSettings_v5')||'{}').dragY)"))
             check("Companion uses manual position", js(page, "document.querySelector('#hh-companion-trigger')?.classList.contains('manual')"))
             # Reactions must animate without AI.
             page.locator("#hh-companion-trigger").click()
@@ -219,7 +219,7 @@ def main() -> int:
             page.locator("#hh-companion-trigger").click()
             page.wait_for_timeout(50)
             page.locator("#hh-companion-panel [data-hh='reset-position']").click()
-            check("Position reset works", js(page, "JSON.parse(localStorage.getItem('hhCompanionSettings_v4')||'{}').dragX === null"))
+            check("Position reset works", js(page, "JSON.parse(localStorage.getItem('hhCompanionSettings_v5')||'{}').dragX === null"))
             page.locator("#hh-companion-panel [data-hh='close']").click()
             page.wait_for_timeout(50)
 
