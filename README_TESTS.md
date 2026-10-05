@@ -1,4 +1,4 @@
-# HorseHub 1.34.0 – 2D-Andalusier-Test
+# HorseHub 1.35.0 – 2D-Andalusier-Test
 
 - Fester Begleiter für die gesamte App.
 - A – Andalusier (Rappe) als geschichteter SVG-2D-Rig.
@@ -12,7 +12,7 @@
 ## Test
 1. ZIP entpacken und in das separate Test-Repository laden.
 2. Seite auf Android Chrome öffnen.
-3. Prüfen, dass unten `App-Version 1.34.0` steht.
+3. Prüfen, dass unten `App-Version 1.35.0` steht.
 4. 20–30 Sekunden beobachten: Atmung läuft dauerhaft, andere Bewegungen treten unabhängig und unregelmäßig auf.
 5. Begleiter antippen: Reaktion/Bubble.
 6. Begleiter ziehen: Position wird gespeichert.
@@ -22,7 +22,23 @@
 Hinweis: Das ist bewusst zunächst ein technisch robuster 2D-Prototyp. Die endgültige optische Detailtreue kann anschließend durch hochwertigere transparente Ebenen ersetzt werden, ohne das Animationssystem neu zu schreiben.
 
 
-## 1.34.0 – realistischer Andalusier
+## 1.35.0 – realistischer Andalusier
 - Die bisher einfache SVG-Figur wurde durch einen transparenten, realistisch gerenderten Andalusier als 2D-Bildlayer ersetzt.
 - Die vorhandene leichte Animationssteuerung bleibt erhalten: Atmung, Gewichtsverlagerung, Ohren, Blinzeln, Kopf, Mähne und Schweif.
 - Kein 3D-Modell, keine KI und kein Modell-Download.
+
+## 1.35.0 Verfeinerung
+- Kopf/Hals weiter isoliert; kein Körper-Rig.
+- Hals/Atmung, Kopfbewegung, Ohren und Mähne laufen in getrennten Ebenen.
+- Mähne folgt der Kopfbewegung leicht verzögert.
+- Ohren reagieren unabhängig und asymmetrisch.
+- Synchrones Blinzeln bleibt erhalten.
+
+
+## Testschwerpunkt 1.35.0
+- Kopf und Hals bleiben isoliert; kein Ganzkörper-Rig.
+- Halsbewegung/Atmung ist eine eigene äußere Ebene.
+- Kopfbewegung ist eine eigene innere Ebene.
+- Mähne folgt der Kopfbewegung leicht verzögert als separate Layer.
+- Linkes/rechtes Ohr werden unabhängig bewegt.
+- Beide Augenlider werden mit demselben Timer gleichzeitig ausgelöst.
