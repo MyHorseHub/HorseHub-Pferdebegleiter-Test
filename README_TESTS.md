@@ -75,8 +75,12 @@ Hinweis: Das ist bewusst zunächst ein technisch robuster 2D-Prototyp. Die endg�
 - Beide Augen blinzeln weiterhin über ein gemeinsames Ereignis synchron.
 
 
-## 1.46.0 – Blinzeln nach markierten Augäpfeln
+## 1.47.0 – Blinzeln nach markierten Augäpfeln
 - Die vom Nutzer markierten sichtbaren Augapfel-Flächen dienen als exakte Blink-Zielbereiche.
 - Augenkoordinaten nicht verschoben; die geschlossene Hautfläche wird nur innerhalb dieser Bereiche eingeblendet.
 - Beide Augen blinken synchron.
 - Keine Ohr-Overlay-Ebenen.
+
+
+## 1.47.0 – Blink fix
+The eye coordinates from 1.46.0 are unchanged. The blink uses exact marked eye boxes as full skin patches and a top-to-bottom clip wipe, so the eyeball is visibly covered during the blink.
