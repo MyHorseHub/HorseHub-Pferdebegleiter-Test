@@ -96,3 +96,7 @@ Blink-Animation umgedreht: Das obere Lid beginnt an der oberen Ausgangskante und
 - Lider sind jetzt leichte, ovale CSS-Formen in einer pferdefellnahen Farbe.
 - Blinzeln fährt das obere Lid von oben nach unten über den bereits korrekt markierten Augapfel.
 - Beide Augen werden weiterhin synchron animiert.
+
+
+## 1.51.0 – Ohr-Test
+Das perfekte Blinzeln aus 1.50.0 bleibt unverändert. Für die Ohren wurde nur eine sehr kleine Overlay-Bewegung ergänzt: Die Originalohren bleiben in der Ruheposition exakt deckungsgleich; die animierten Ohrbewegungen sind bewusst auf wenige Grad begrenzt, um kein erneutes Verschieben des Charakters zu provozieren.
