@@ -1,4 +1,4 @@
-/* HorseHub 1.33.0 – layered 2D Andalusian puppet. */
+/* HorseHub 1.34.0 – layered 2D Andalusian puppet. */
 #hh-companion-root{position:fixed;inset:0;pointer-events:none;z-index:9999;font-family:inherit}
 #hh-companion-trigger{pointer-events:auto;position:fixed;right:16px;bottom:calc(76px + env(safe-area-inset-bottom));width:130px;height:160px;border:0;background:transparent;padding:0;cursor:grab;filter:drop-shadow(0 10px 14px #0003);touch-action:none;user-select:none;-webkit-user-select:none;transition:filter .18s ease,opacity .2s ease}
 #hh-companion-trigger.manual{right:auto;bottom:auto}#hh-companion-trigger.dragging{cursor:grabbing;filter:drop-shadow(0 13px 20px #0004)}
@@ -27,31 +27,28 @@
 #hh-companion-panel{pointer-events:auto;position:fixed;right:14px;bottom:calc(212px + env(safe-area-inset-bottom));width:min(390px,calc(100vw - 28px));max-height:min(72vh,650px);overflow:auto;background:#fffdf9;border:1px solid #d9cdbd;border-radius:20px;padding:15px;box-shadow:0 14px 38px #0003;z-index:10001}.hh-muted{color:#6d665e;font-size:13px}.hh-companion-panel-title{display:flex;justify-content:space-between;align-items:center}.hh-section{margin-top:14px}.hh-row-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.hh-row-actions button{flex:1;min-width:120px}.hh-check{display:flex;gap:8px;align-items:center;padding:6px 0;font-size:13px}.hh-check input{width:auto}.hh-companion-status{margin-top:8px;padding:8px 10px;border-radius:10px;background:#e8f4e8;color:#245b2b;font-size:12px}.hh-companion-status.off{background:#f5e9e6;color:#7b3026}
 .hh-settings-inline{display:grid;grid-template-columns:100px 1fr;gap:12px;align-items:start}.hh-settings-inline-photo{width:100px;height:100px;border-radius:14px;background:#eee8dc;overflow:hidden;display:grid;place-items:center}.hh-settings-inline-photo .hh-vector-wrap{width:100%;height:100%}.hh-selection-note{font-size:12px;color:#6d665e;margin-top:6px}
 @media(max-width:480px){#hh-companion-trigger{right:9px}.hh-companion-bubble{max-width:220px}#hh-companion-panel{right:8px;width:calc(100vw - 16px);bottom:calc(190px + env(safe-area-inset-bottom))}}
-/* 1.33.0 – realistic Andalusian image layer. The character image is transparent and serves as the visual source; motion stays lightweight. */
-.hh-photo-wrap{width:100%;height:100%;position:relative;display:grid;place-items:end center;overflow:visible}
-.hh-photo-rig{position:relative;width:100%;height:100%;display:flex;align-items:flex-end;justify-content:center;transform-box:border-box;transform-origin:50% 92%;will-change:transform}
+/* 1.34.0 – Kopf/Hals-Fokus: ein sauberer, leichter 2D-Kopf-Rig. */
+.hh-head-only{width:100%;height:100%;position:relative;display:grid;place-items:end center;overflow:visible}
+.hh-photo-rig{position:relative;width:100%;height:100%;display:flex;align-items:flex-end;justify-content:center;transform-box:border-box;transform-origin:67% 78%;will-change:transform}
 .hh-photo-base{width:100%;height:100%;object-fit:contain;object-position:center bottom;display:block;pointer-events:none;user-select:none;-webkit-user-drag:none;filter:drop-shadow(0 8px 8px rgba(0,0,0,.18))}
-.hh-photo-ear,.hh-photo-lid{position:absolute;display:block;pointer-events:none;z-index:3;background-image:url('andalusier-andalusian-realistic.png?v=1.33.0');background-repeat:no-repeat;background-size:100% 100%;transform-box:border-box;will-change:transform}
-.hh-photo-ear{top:0;width:11%;height:15%;background-color:transparent;clip-path:polygon(18% 0,100% 0,100% 100%,0 100%)}
-.hh-photo-ear-l{left:78%;transform-origin:70% 95%}
-.hh-photo-ear-r{left:90%;transform-origin:25% 95%}
-.hh-photo-lid{width:6.5%;height:3.2%;top:18%;border-radius:50%;background-image:none;background:#1c1411;opacity:.0;z-index:4;transform-origin:center 70%}
-.hh-photo-lid-l{left:81.5%}.hh-photo-lid-r{left:93.5%}
+/* Small overlay regions make the ears feel independently alive without a heavy rig. */
+.hh-photo-ear{position:absolute;inset:0;display:block;pointer-events:none;z-index:3;background-image:url('andalusier-head-neck.png?v=1.34.0');background-repeat:no-repeat;background-size:100% 100%;will-change:transform;transform-box:border-box}
+.hh-photo-ear-l{clip-path:polygon(65% 0,84% 0,86% 18%,83% 30%,68% 25%,62% 12%);transform-origin:76% 22%}
+.hh-photo-ear-r{clip-path:polygon(88% 0,100% 0,100% 20%,97% 29%,89% 25%,86% 12%);transform-origin:94% 22%}
+/* Both lids share exactly one animation trigger so blinking is simultaneous. */
+.hh-photo-lid{position:absolute;display:block;pointer-events:none;z-index:5;width:7%;height:4.5%;top:29%;border-radius:50%;background:radial-gradient(ellipse at 50% 65%,#241914 0 58%,#4a3027 72%,transparent 74%);opacity:.02;transform-origin:50% 72%;will-change:transform,opacity}
+.hh-photo-lid-l{left:65.5%}.hh-photo-lid-r{left:92.5%}
 .hh-photo-rig.hh-breathe{animation:hh-photo-breathe 4.8s ease-in-out infinite}
-@keyframes hh-photo-breathe{0%,100%{transform:translateY(0) scale(1,1)}50%{transform:translateY(-1.5px) scale(1.006,1.008)}}
-.hh-photo-rig.hh-head-left{animation:hh-photo-head-left 1.8s ease-in-out both}
-.hh-photo-rig.hh-head-right{animation:hh-photo-head-right 1.8s ease-in-out both}
-@keyframes hh-photo-head-left{0%,100%{transform:rotate(0) translate(0,0)}38%{transform:rotate(-1.5deg) translate(-1px,-1px)}68%{transform:rotate(-.4deg)}}
-@keyframes hh-photo-head-right{0%,100%{transform:rotate(0) translate(0,0)}38%{transform:rotate(1.4deg) translate(1px,0)}68%{transform:rotate(.4deg)}}
-.hh-photo-rig.hh-weight{animation:hh-photo-weight 1.9s ease-in-out both}
-@keyframes hh-photo-weight{0%,100%{transform:translateX(0) translateY(0) rotate(0)}45%{transform:translateX(-1.5px) translateY(1px) rotate(-.35deg)}70%{transform:translateX(1px) rotate(.25deg)}}
-.hh-photo-rig.hh-mane-sway{animation:hh-photo-mane 1.8s ease-in-out both}
-@keyframes hh-photo-mane{0%,100%{transform:rotate(0)}32%{transform:rotate(-.8deg) translateX(-1px)}68%{transform:rotate(.6deg) translateX(1px)}}
-.hh-photo-rig.hh-tail-sway{animation:hh-photo-tail 2.4s ease-in-out both}
-@keyframes hh-photo-tail{0%,100%{transform:rotate(0)}30%{transform:rotate(.9deg)}62%{transform:rotate(-.7deg)}82%{transform:rotate(.35deg)}}
+@keyframes hh-photo-breathe{0%,100%{transform:translateY(0) scale(1,1)}50%{transform:translateY(-1.2px) scale(1.006,1.008)}}
+.hh-photo-rig.hh-head-left{animation:hh-photo-head-left 1.9s cubic-bezier(.22,.7,.25,1) both}
+.hh-photo-rig.hh-head-right{animation:hh-photo-head-right 1.9s cubic-bezier(.22,.7,.25,1) both}
+@keyframes hh-photo-head-left{0%,100%{transform:rotate(0) translate(0,0)}42%{transform:rotate(-2deg) translate(-2px,-1px)}72%{transform:rotate(-.45deg) translate(0,0)}}
+@keyframes hh-photo-head-right{0%,100%{transform:rotate(0) translate(0,0)}42%{transform:rotate(1.8deg) translate(2px,0)}72%{transform:rotate(.4deg) translate(0,0)}}
+.hh-photo-rig.hh-mane-sway{animation:hh-photo-mane 2s cubic-bezier(.25,.65,.3,1) both}
+@keyframes hh-photo-mane{0%,100%{transform:rotate(0) translateX(0)}32%{transform:rotate(-.9deg) translateX(-1px)}68%{transform:rotate(.65deg) translateX(1px)}}
 .hh-photo-ear.hh-ear-l{animation:hh-photo-ear-l 1s ease-in-out both}.hh-photo-ear.hh-ear-r{animation:hh-photo-ear-r 1s ease-in-out both}
-@keyframes hh-photo-ear-l{0%,100%{transform:rotate(0)}38%{transform:rotate(-3deg)}68%{transform:rotate(-1deg)}}
-@keyframes hh-photo-ear-r{0%,100%{transform:rotate(0)}35%{transform:rotate(3deg)}68%{transform:rotate(1deg)}}
-.hh-photo-lid.hh-blink{opacity:.92;animation:hh-photo-blink .42s ease-in-out both}
-@keyframes hh-photo-blink{0%,100%{transform:scaleY(.12);opacity:.05}38%,64%{transform:scaleY(1);opacity:.92}}
+@keyframes hh-photo-ear-l{0%,100%{transform:rotate(0)}35%{transform:rotate(-4deg)}68%{transform:rotate(-1deg)}}
+@keyframes hh-photo-ear-r{0%,100%{transform:rotate(0)}35%{transform:rotate(4deg)}68%{transform:rotate(1deg)}}
+.hh-photo-lid.hh-blink{animation:hh-photo-blink .43s cubic-bezier(.35,.0,.45,1) both}
+@keyframes hh-photo-blink{0%{transform:scaleY(.08);opacity:.02}34%{transform:scaleY(.95);opacity:.94}58%{transform:scaleY(1);opacity:.94}100%{transform:scaleY(.08);opacity:.02}}
 .hh-photo-rx{animation-duration:2.3s}

@@ -1,4 +1,4 @@
-"""HorseHub 1.33.0 browser smoke test.
+"""HorseHub 1.34.0 browser smoke test.
 
 Runs the real PWA HTML in Chromium with a local HTTP server. The Supabase CDN
 script is replaced by a tiny in-browser stub so the test is deterministic and
