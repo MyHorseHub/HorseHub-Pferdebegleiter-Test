@@ -1,4 +1,4 @@
-# HorseHub 1.30.0 – Fester animierter Pferdebegleiter
+# HorseHub 1.30.1 – Fester animierter Pferdebegleiter
 
 ## Neuer Ansatz
 Die lokale KI aus 1.28.x wurde vollständig aus diesem Testbuild entfernt. Es gibt keine FLUX-Dateien, keinen ONNX-Worker, kein KI-Testlabor und keinen Modell-Download mehr.
