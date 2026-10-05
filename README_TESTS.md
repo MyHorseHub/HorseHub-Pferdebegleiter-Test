@@ -75,16 +75,24 @@ Hinweis: Das ist bewusst zunächst ein technisch robuster 2D-Prototyp. Die endg�
 - Beide Augen blinzeln weiterhin über ein gemeinsames Ereignis synchron.
 
 
-## 1.48.0 – Blinzeln nach markierten Augäpfeln
+## 1.49.0 – Blinzeln nach markierten Augäpfeln
 - Die vom Nutzer markierten sichtbaren Augapfel-Flächen dienen als exakte Blink-Zielbereiche.
 - Augenkoordinaten nicht verschoben; die geschlossene Hautfläche wird nur innerhalb dieser Bereiche eingeblendet.
 - Beide Augen blinken synchron.
 - Keine Ohr-Overlay-Ebenen.
 
 
-## 1.48.0 – Blink fix
+## 1.49.0 – Blink fix
 The eye coordinates from 1.46.0 are unchanged. The blink uses exact marked eye boxes as full skin patches and a top-to-bottom clip wipe, so the eyeball is visibly covered during the blink.
 
 
-## 1.48.0
+## 1.49.0
 Blink-Animation umgedreht: Das obere Lid beginnt an der oberen Ausgangskante und schliesst sichtbar von oben nach unten. Augenkoordinaten und Originalbild bleiben unverändert.
+
+
+## 1.49.0 – natürliches Augenlid
+- Augenpositionen unverändert.
+- Textur-/Bild-Overlays für die Lider entfernt.
+- Lider sind jetzt leichte, ovale CSS-Formen in einer pferdefellnahen Farbe.
+- Blinzeln fährt das obere Lid von oben nach unten über den bereits korrekt markierten Augapfel.
+- Beide Augen werden weiterhin synchron animiert.
