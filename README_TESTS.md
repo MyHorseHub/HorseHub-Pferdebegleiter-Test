@@ -59,3 +59,10 @@ Hinweis: Das ist bewusst zunächst ein technisch robuster 2D-Prototyp. Die endg�
 - Ohr-Overlay-Ebenen vollständig entfernt, damit keine versetzten/doppelten Ohren entstehen.
 - Ohren bleiben exakt dort, wo sie im Originalbild sitzen.
 - Kopf, Hals, synchrones Blinzeln und Kopfnicken bleiben aktiv.
+
+
+### 1.42.0 – Präziser Blink
+- Blink-Patches direkt aus der freigegebenen Originalvorlage abgeleitet.
+- Linkes und rechtes Auge separat auf die tatsächlichen Augenöffnungen ausgerichtet.
+- Kein Verschieben/Skalieren beim Blinzeln; stattdessen wird die passende Hauttextur von oben nach unten eingeblendet.
+- Beide Augen werden weiterhin exakt gleichzeitig ausgelöst.
