@@ -1,4 +1,4 @@
-"""HorseHub 1.29.0 browser smoke test.
+"""HorseHub 1.30.0 browser smoke test.
 
 Runs the real PWA HTML in Chromium with a local HTTP server. The Supabase CDN
 script is replaced by a tiny in-browser stub so the test is deterministic and
@@ -158,13 +158,13 @@ def main() -> int:
                     '<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>',
                     f"<script>{SUPABASE_STUB}</script>",
                 ).replace(
-                    '<link rel="stylesheet" href="./horse-companion.css?v=1.29.0">',
+                    '<link rel="stylesheet" href="./horse-companion.css?v=1.30.0">',
                     f"<style>{companion_css}</style>",
                 ).replace(
-                    '<script src="./companion-db.js?v=1.29.0"></script>',
+                    '<script src="./companion-db.js?v=1.30.0"></script>',
                     f"<script>{companion_db_js}</script>",
                 ).replace(
-                    '<script src="./horse-companion.js?v=1.29.0"></script>',
+                    '<script src="./horse-companion.js?v=1.30.0"></script>',
                     f"<script>{companion_js}</script>",
                 )
                 page.set_content(storage_shim + html_inline, wait_until="domcontentloaded")
@@ -189,37 +189,39 @@ def main() -> int:
             check("Home hero has no edit control", page.locator("#homeHero .hero-edit").count() == 0)
             page.locator("#settings").evaluate("el => el.classList.remove('hidden')")
             check("Hero editing remains in settings", page.get_by_text("Bildausschnitt bearbeiten", exact=False).count() >= 1)
-            # 1b) Companion catalog: local, fully animated, no AI assets.
+            # 1b) Fixed companion: local, fully animated, no AI assets.
             check("Companion settings host exists", page.locator("#horseCompanionSettingsHost").count() == 1)
-            check("Companion database loaded", js(page, "Array.isArray(window.HorseHubCompanionDB) && window.HorseHubCompanionDB.length >= 8"))
+            check("Single fixed companion database loaded", js(page, "Array.isArray(window.HorseHubCompanionDB) && window.HorseHubCompanionDB.length === 1"))
             check("AI companion script is absent", not (ROOT / "horse-companion-ai.js").exists())
             check("AI test lab is absent", not (ROOT / "horse-companion-ai-lab.html").exists())
             check("ONNX worker is absent", not (ROOT / "horsehub-ort-worker.js").exists())
-            js(page, "localStorage.setItem('horses', JSON.stringify([{id:'companion-test-horse', name:'Begleiter-Test', breed:'Andalusier', color:'Schwarz'}])); window.dispatchEvent(new StorageEvent('storage',{key:'horses'}));")
-            page.wait_for_timeout(250)
-            page.locator("#settings").evaluate("el => el.classList.remove('hidden')")
-            page.get_by_role("button", name="Begleiter auswählen", exact=False).click()
-            page.wait_for_selector("#hh-companion-panel .hh-catalog-card", timeout=5000)
-            check("Animated companion catalog is visible", page.locator("#hh-companion-panel .hh-catalog-card").count() >= 8)
-            page.locator("#hh-companion-panel .hh-catalog-card").first.click()
-            page.wait_for_timeout(100)
+            page.wait_for_selector("#hh-companion-face svg", timeout=5000)
             check("Companion SVG is rendered", page.locator("#hh-companion-face svg").count() == 1)
-            check("Horse animation classes are present", js(page, "document.querySelector('#hh-companion-face .hh-ear-l') !== null && document.querySelector('#hh-companion-face .hh-eye') !== null && document.querySelector('#hh-companion-face .hh-tail') !== null"))
-            page.locator("#hh-companion-trigger").click()
-            page.locator("#hh-companion-trigger").click()
+            check("Horse animation classes are present", js(page, "document.querySelector('#hh-companion-face .hh-ear-l') !== null && document.querySelector('#hh-companion-face .hh-eye') !== null && document.querySelector('#hh-companion-face .hh-tail') !== null && document.querySelector('#hh-companion-face .hh-head') !== null"))
+            check("No per-horse selection UI remains", page.locator("#hh-companion-panel .hh-catalog-card").count() == 0 and page.locator("#hh-horse-select").count() == 0)
+            check("Fixed companion wording is visible", page.get_by_text("Ein fester Begleiter für die gesamte App", exact=False).count() >= 1)
+            # Direct drag positioning must work and persist locally.
+            trigger=page.locator("#hh-companion-trigger")
+            box=trigger.bounding_box()
+            assert box is not None
+            sx=box["x"]+box["width"]/2; sy=box["y"]+box["height"]/2
+            page.mouse.move(sx,sy); page.mouse.down(); page.mouse.move(80,220,steps=8); page.mouse.up()
             page.wait_for_timeout(100)
-            check("Companion selection stored per horse", js(page, "JSON.parse(localStorage.getItem('hhCompanionSelections_v1') || '{}')['companion-test-horse']" ) != None)
-            js(page, "localStorage.setItem('horses', JSON.stringify([{id:'companion-test-horse', name:'Begleiter-Test', breed:'Andalusier', color:'Schwarz'},{id:'companion-test-horse-2', name:'Zweites Pferd', breed:'Haflinger', color:'Goldfuchs'}])); window.dispatchEvent(new StorageEvent('storage',{key:'horses'}));")
-            page.wait_for_timeout(150)
-            check("Second horse gets its own companion choice", js(page, "(JSON.parse(localStorage.getItem('hhCompanionSelections_v1') || '{}')['companion-test-horse'] || '') !== (JSON.parse(localStorage.getItem('hhCompanionSelections_v1') || '{}')['companion-test-horse-2'] || '') || true"))
+            check("Companion can be dragged", js(page, "Number.isFinite(JSON.parse(localStorage.getItem('hhCompanionSettings_v4')||'{}').dragX) && Number.isFinite(JSON.parse(localStorage.getItem('hhCompanionSettings_v4')||'{}').dragY)"))
+            check("Companion uses manual position", js(page, "document.querySelector('#hh-companion-trigger')?.classList.contains('manual')"))
             # Reactions must animate without AI.
-            page.evaluate("window.dispatchEvent(new Event('pageshow'))")
-            page.wait_for_timeout(100)
-            page.get_by_role("button", name="Begleiter auswählen", exact=False).click()
+            page.locator("#hh-companion-trigger").click()
+            page.locator("#hh-companion-trigger").click()
             page.wait_for_timeout(100)
             page.locator("#hh-companion-panel [data-hh='preview']").click()
             page.wait_for_timeout(100)
             check("Reaction preview works", js(page, "document.querySelector('#hh-companion-face')?.className.includes('hh-reaction-happy')"))
+            page.locator("#hh-companion-trigger").click()
+            page.wait_for_timeout(50)
+            page.locator("#hh-companion-panel [data-hh='reset-position']").click()
+            check("Position reset works", js(page, "JSON.parse(localStorage.getItem('hhCompanionSettings_v4')||'{}').dragX === null"))
+            page.locator("#hh-companion-panel [data-hh='close']").click()
+            page.wait_for_timeout(50)
 
             js(page, "localStorage.removeItem('horses'); window.dispatchEvent(new StorageEvent('storage',{key:'horses'}));")
             page.wait_for_timeout(100)
