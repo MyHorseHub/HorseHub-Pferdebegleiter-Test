@@ -1,29 +1,22 @@
-# HorseHub 1.30.1 – Fester animierter Pferdebegleiter
+# HorseHub 1.32.0 – 2D-Andalusier-Test
 
-## Neuer Ansatz
-Die lokale KI aus 1.28.x wurde vollständig aus diesem Testbuild entfernt. Es gibt keine FLUX-Dateien, keinen ONNX-Worker, kein KI-Testlabor und keinen Modell-Download mehr.
-
-HorseHub verwendet jetzt **einen festen Begleiter für die gesamte App**. Es gibt bewusst keine Zuordnung pro Pferd und keine Begleiter-Auswahl mehr. Der Begleiter wird lokal als SVG gerendert und direkt im Browser animiert.
-
-## Look und Animation
-Der Begleiter wurde gegenüber 1.29 optisch überarbeitet: weichere Farbverläufe, Schattierung und Proportionen sowie getrennte Animationsgruppen für:
-- Ohren
-- Kopf
-- Augen/Blinzeln
-- Mähne
-- Schweif
-- Körper/Atmung
-- Gewichtsverlagerung der Beine
-
-Zusätzlich gibt es kurze Reaktionsbewegungen für Begrüßung, erledigte Aufgaben und Erinnerungen.
-
-## Position
-Der Begleiter kann direkt auf dem App-Bildschirm per Finger/Maus gezogen werden. Die Position wird lokal gespeichert. Über **Position zurücksetzen** kann die Standardposition wiederhergestellt werden.
+- Fester Begleiter für die gesamte App.
+- A – Andalusier (Rappe) als geschichteter SVG-2D-Rig.
+- Kein KI-Modell, kein 3D-Modell, kein externer Download.
+- Unabhängige Bewegungen: Atmung, Gewichtsverlagerung, Ohren, Blinzeln, Kopf, Mähne, Schweif.
+- Zufällige/asynchrone Idle-Timer statt eines starren Animationsloops.
+- Reaktionen: Begrüßung, Aufgabe erledigt, Erinnerung, neugierig, ruhig.
+- Direkt per Finger verschiebbar; Position und Größe werden lokal gespeichert.
+- Begleiter kann in den Einstellungen vollständig deaktiviert werden.
 
 ## Test
-1. App öffnen und Einstellungen → Pferdebegleiter aufrufen.
-2. Prüfen, dass kein Pferde-/Vorlagen-Auswahlmenü mehr vorhanden ist.
-3. Begleiter direkt mit dem Finger an eine freie Stelle ziehen.
-4. App neu laden und prüfen, ob die Position erhalten bleibt.
-5. Größe ändern und Animation testen.
-6. Prüfen, dass der Begleiter beim Verschieben nicht versehentlich eine App-Funktion auslöst.
+1. ZIP entpacken und in das separate Test-Repository laden.
+2. Seite auf Android Chrome öffnen.
+3. Prüfen, dass unten `App-Version 1.32.0` steht.
+4. 20–30 Sekunden beobachten: Atmung läuft dauerhaft, andere Bewegungen treten unabhängig und unregelmäßig auf.
+5. Begleiter antippen: Reaktion/Bubble.
+6. Begleiter ziehen: Position wird gespeichert.
+7. Einstellungen: Begleiter deaktivieren/aktivieren und Position zurücksetzen.
+8. App neu laden: Position und Aktivierungsstatus bleiben erhalten.
+
+Hinweis: Das ist bewusst zunächst ein technisch robuster 2D-Prototyp. Die endgültige optische Detailtreue kann anschließend durch hochwertigere transparente Ebenen ersetzt werden, ohne das Animationssystem neu zu schreiben.

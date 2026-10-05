@@ -1,33 +1,29 @@
-/* HorseHub 1.30.1 – fixed companion, refined SVG look and direct drag positioning. */
+/* HorseHub 1.32.0 – layered 2D Andalusian puppet. */
 #hh-companion-root{position:fixed;inset:0;pointer-events:none;z-index:9999;font-family:inherit}
-#hh-companion-trigger{pointer-events:auto;position:fixed;right:16px;bottom:calc(76px + env(safe-area-inset-bottom));width:120px;height:145px;border:0;background:transparent;padding:0;cursor:grab;filter:drop-shadow(0 9px 13px #0002);touch-action:none;user-select:none;-webkit-user-select:none;transition:filter .18s ease}
-#hh-companion-trigger.manual{right:auto;bottom:auto}
-#hh-companion-trigger.dragging{cursor:grabbing;filter:drop-shadow(0 12px 18px #0003)}
-.hh-vector-wrap{width:100%;height:100%;position:relative;display:grid;place-items:center}
-.hh-vector-wrap svg{width:100%;height:100%;overflow:visible}
-.hh-horse-idle{transform-origin:50% 88%;animation:hh-breathe 4.4s ease-in-out infinite}
-.hh-head{transform-box:fill-box;transform-origin:50% 78%;animation:hh-head 7.2s cubic-bezier(.45,0,.55,1) infinite}
-.hh-ears{transform-box:fill-box;transform-origin:50% 50%;animation:hh-ear-group 8.5s ease-in-out infinite}
-.hh-ear-l{transform-box:fill-box;transform-origin:90% 95%;animation:hh-ear-l 5.8s ease-in-out infinite}
-.hh-ear-r{transform-box:fill-box;transform-origin:10% 95%;animation:hh-ear-r 6.4s ease-in-out infinite}
-.hh-eye{transform-box:fill-box;transform-origin:center;animation:hh-blink 6.8s infinite}
-.hh-tail{transform-box:fill-box;transform-origin:20% 35%;animation:hh-tail 4.6s ease-in-out infinite}
-.hh-mane{transform-box:fill-box;transform-origin:70% 60%;animation:hh-mane 5.2s ease-in-out infinite}
-.hh-legs{transform-box:fill-box;transform-origin:50% 10%;animation:hh-weight 5.8s ease-in-out infinite}
-.hh-body-shine{animation:hh-shine 5.5s ease-in-out infinite}
-@keyframes hh-breathe{0%,100%{transform:translateY(0) scaleY(1)}50%{transform:translateY(-1.7px) scaleY(1.008)}}
-@keyframes hh-head{0%,100%{transform:rotate(0) translateY(0)}18%{transform:rotate(-1.2deg) translateY(-1px)}34%{transform:rotate(-2deg) translateY(0)}52%{transform:rotate(.9deg) translateY(1px)}71%{transform:rotate(-.7deg)}86%{transform:rotate(0) translateY(0)}}
-@keyframes hh-ear-group{0%,100%{transform:rotate(0)}32%{transform:rotate(-1deg)}38%{transform:rotate(1deg)}62%{transform:rotate(0)}}
-@keyframes hh-ear-l{0%,100%{transform:rotate(0)}16%{transform:rotate(5deg)}22%{transform:rotate(1deg)}47%{transform:rotate(-3deg)}53%{transform:rotate(0)}}
-@keyframes hh-ear-r{0%,100%{transform:rotate(0)}24%{transform:rotate(-4deg)}31%{transform:rotate(-1deg)}68%{transform:rotate(3deg)}75%{transform:rotate(0)}}
-@keyframes hh-blink{0%,43%,46%,100%{transform:scaleY(1)}44%,45%{transform:scaleY(.08)}}
-@keyframes hh-tail{0%,100%{transform:rotate(0)}22%{transform:rotate(4deg)}48%{transform:rotate(-5deg)}74%{transform:rotate(3deg)}}
-@keyframes hh-mane{0%,100%{transform:skewY(0) translateX(0)}48%{transform:skewY(1.2deg) translateX(1px)}72%{transform:skewY(-.8deg)}}
-@keyframes hh-weight{0%,100%{transform:translateY(0)}50%{transform:translateY(1px)}}
-@keyframes hh-shine{0%,100%{opacity:.7}50%{opacity:1}}
+#hh-companion-trigger{pointer-events:auto;position:fixed;right:16px;bottom:calc(76px + env(safe-area-inset-bottom));width:130px;height:160px;border:0;background:transparent;padding:0;cursor:grab;filter:drop-shadow(0 10px 14px #0003);touch-action:none;user-select:none;-webkit-user-select:none;transition:filter .18s ease,opacity .2s ease}
+#hh-companion-trigger.manual{right:auto;bottom:auto}#hh-companion-trigger.dragging{cursor:grabbing;filter:drop-shadow(0 13px 20px #0004)}
+.hh-vector-wrap{width:100%;height:100%;position:relative;display:grid;place-items:center}.hh-vector-wrap svg{width:100%;height:100%;overflow:visible}.hh-andalusian-svg{overflow:visible}
+/* Independent rig layers */
+.hh-rig{transform-box:fill-box;transform-origin:52% 92%}.hh-shadow{transform-box:fill-box;transform-origin:center;animation:hh-shadow 4.8s ease-in-out infinite}.hh-body{transform-box:fill-box;transform-origin:50% 70%}.hh-neck{transform-box:fill-box;transform-origin:56% 84%}.hh-head{transform-box:fill-box;transform-origin:57% 85%}.hh-ears{transform-box:fill-box;transform-origin:55% 80%}.hh-ear-l,.hh-ear-r{transform-box:fill-box}.hh-mane-front{transform-box:fill-box;transform-origin:80% 55%}.hh-tail{transform-box:fill-box;transform-origin:25% 20%}.hh-legs{transform-box:fill-box;transform-origin:50% 10%}.hh-lid{transform-box:fill-box;transform-origin:50% 100%}
+.hh-breathe{animation:hh-breathe 4.8s ease-in-out infinite}.hh-weight{animation:hh-weight 1.9s ease-in-out both}.hh-ear-l{animation:hh-ear-left 1s ease-in-out both}.hh-ear-r{animation:hh-ear-right 1s ease-in-out both}.hh-blink{animation:hh-blink .42s ease-in-out both}.hh-head-left{animation:hh-head-left 1.8s ease-in-out both}.hh-head-right{animation:hh-head-right 1.8s ease-in-out both}.hh-mane-sway{animation:hh-mane-sway 1.8s ease-in-out both}.hh-tail-sway{animation:hh-tail-sway 2.4s ease-in-out both}
+@keyframes hh-breathe{0%,100%{transform:translateY(0) scale(1,1)}50%{transform:translateY(-1.4px) scale(1.006,1.009)}}
+@keyframes hh-shadow{0%,100%{transform:scaleX(1);opacity:.22}50%{transform:scaleX(.97);opacity:.18}}
+@keyframes hh-weight{0%,100%{transform:translateX(0) translateY(0)}45%{transform:translateX(-2px) translateY(1px)}70%{transform:translateX(1.5px) translateY(0)}}
+@keyframes hh-ear-left{0%,100%{transform:rotate(0)}38%{transform:rotate(-9deg)}68%{transform:rotate(-3deg)}}
+@keyframes hh-ear-right{0%,100%{transform:rotate(0)}35%{transform:rotate(7deg)}68%{transform:rotate(2deg)}}
+@keyframes hh-blink{0%,100%{transform:scaleY(1)}38%,64%{transform:scaleY(.08)}}
+@keyframes hh-head-left{0%,100%{transform:rotate(0) translate(0,0)}38%{transform:rotate(-2.2deg) translate(-1px,-1px)}68%{transform:rotate(-.7deg) translate(0,0)}}
+@keyframes hh-head-right{0%,100%{transform:rotate(0) translate(0,0)}38%{transform:rotate(1.9deg) translate(1px,0)}68%{transform:rotate(.5deg)}}
+@keyframes hh-mane-sway{0%,100%{transform:rotate(0) translateX(0)}32%{transform:rotate(-1.4deg) translateX(-1px)}68%{transform:rotate(.8deg) translateX(1.5px)}}
+@keyframes hh-tail-sway{0%,100%{transform:rotate(0)}30%{transform:rotate(7deg)}62%{transform:rotate(-4deg)}82%{transform:rotate(2deg)}}
+/* Reactions */
+.hh-rx-greet{animation:hh-rx-greet 2.3s ease both}.hh-rx-happy{animation:hh-rx-happy 2.3s ease both}.hh-rx-curious{animation:hh-rx-curious 2.4s ease both}.hh-rx-alert{animation:hh-rx-alert 2.2s ease both}.hh-rx-calm{animation:hh-rx-calm 3s ease both}
+@keyframes hh-rx-greet{0%,100%{transform:translateY(0)}25%{transform:translateY(-4px)}48%{transform:translateY(-2px)}70%{transform:translateY(0)}}
+@keyframes hh-rx-happy{0%,100%{transform:translateY(0)}28%{transform:translateY(-6px) scale(1.025)}52%{transform:translateY(-2px) scale(1.01)}70%{transform:translateY(0)}}
+@keyframes hh-rx-curious{0%,100%{transform:rotate(0)}28%{transform:rotate(-4deg)}55%{transform:rotate(3deg)}78%{transform:rotate(0)}}
+@keyframes hh-rx-alert{0%,100%{transform:translateY(0)}24%{transform:translateY(-3px)}40%{transform:translateY(0)}58%{transform:translateY(-2px)}78%{transform:translateY(0)}}
+@keyframes hh-rx-calm{0%,100%{transform:translateY(0)}45%{transform:translateY(4px)}72%{transform:translateY(2px)}}
 .hh-companion-bubble{position:fixed;max-width:250px;background:#fffdf8;border:1px solid #d8ccb9;border-radius:18px 18px 4px 18px;padding:11px 14px;box-shadow:0 8px 24px #0002;pointer-events:auto;color:#2e2a26;z-index:10000}.hh-bubble-title{font-weight:800;margin-bottom:3px}.hh-bubble-text{font-size:13px;line-height:1.35}
-#hh-companion-panel{pointer-events:auto;position:fixed;right:14px;bottom:calc(212px + env(safe-area-inset-bottom));width:min(390px,calc(100vw - 28px));max-height:min(72vh,650px);overflow:auto;background:#fffdf9;border:1px solid #d9cdbd;border-radius:20px;padding:15px;box-shadow:0 14px 38px #0003;z-index:10001}.hh-muted{color:#6d665e;font-size:13px}.hh-companion-panel-title{display:flex;justify-content:space-between;align-items:center}.hh-section{margin-top:14px}.hh-row-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.hh-row-actions button{flex:1;min-width:120px}.hh-check{display:flex;gap:8px;align-items:center;padding:6px 0;font-size:13px}.hh-check input{width:auto}.hh-companion-status{margin-top:8px;padding:8px 10px;border-radius:10px;background:#e8f4e8;color:#245b2b;font-size:12px}
+#hh-companion-panel{pointer-events:auto;position:fixed;right:14px;bottom:calc(212px + env(safe-area-inset-bottom));width:min(390px,calc(100vw - 28px));max-height:min(72vh,650px);overflow:auto;background:#fffdf9;border:1px solid #d9cdbd;border-radius:20px;padding:15px;box-shadow:0 14px 38px #0003;z-index:10001}.hh-muted{color:#6d665e;font-size:13px}.hh-companion-panel-title{display:flex;justify-content:space-between;align-items:center}.hh-section{margin-top:14px}.hh-row-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.hh-row-actions button{flex:1;min-width:120px}.hh-check{display:flex;gap:8px;align-items:center;padding:6px 0;font-size:13px}.hh-check input{width:auto}.hh-companion-status{margin-top:8px;padding:8px 10px;border-radius:10px;background:#e8f4e8;color:#245b2b;font-size:12px}.hh-companion-status.off{background:#f5e9e6;color:#7b3026}
 .hh-settings-inline{display:grid;grid-template-columns:100px 1fr;gap:12px;align-items:start}.hh-settings-inline-photo{width:100px;height:100px;border-radius:14px;background:#eee8dc;overflow:hidden;display:grid;place-items:center}.hh-settings-inline-photo .hh-vector-wrap{width:100%;height:100%}.hh-selection-note{font-size:12px;color:#6d665e;margin-top:6px}
-.hh-reaction-happy{animation:hh-pop .55s ease}.hh-reaction-curious{animation:hh-curious .8s ease}.hh-reaction-reminder{animation:hh-reminder .7s ease}.hh-reaction-calm{animation:hh-calm 1.4s ease}
-@keyframes hh-pop{50%{transform:scale(1.08) translateY(-6px)}}@keyframes hh-curious{30%{transform:rotate(-5deg)}65%{transform:rotate(3deg)}}@keyframes hh-reminder{25%{transform:translateX(-4px)}50%{transform:translateX(4px)}75%{transform:translateX(-2px)}}@keyframes hh-calm{50%{transform:translateY(-4px)}}
 @media(max-width:480px){#hh-companion-trigger{right:9px}.hh-companion-bubble{max-width:220px}#hh-companion-panel{right:8px;width:calc(100vw - 16px);bottom:calc(190px + env(safe-area-inset-bottom))}}
