@@ -73,3 +73,10 @@ Hinweis: Das ist bewusst zunächst ein technisch robuster 2D-Prototyp. Die endg�
 - Kopfcontainer nutzt jetzt exakt das Seitenverhältnis des Originalbildes, damit Overlay-Koordinaten nicht durch object-fit verschoben werden.
 - Linkes und rechtes Blinzeln wurden anhand der sichtbaren Augäpfel neu positioniert.
 - Beide Augen blinzeln weiterhin über ein gemeinsames Ereignis synchron.
+
+
+## 1.46.0 – Blinzeln nach markierten Augäpfeln
+- Die vom Nutzer markierten sichtbaren Augapfel-Flächen dienen als exakte Blink-Zielbereiche.
+- Augenkoordinaten nicht verschoben; die geschlossene Hautfläche wird nur innerhalb dieser Bereiche eingeblendet.
+- Beide Augen blinken synchron.
+- Keine Ohr-Overlay-Ebenen.
