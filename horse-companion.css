@@ -1,84 +1,32 @@
-/* HorseHub 1.26.1 – animierter Pferdebegleiter */
-#hh-companion-root{position:fixed;right:14px;bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:9000;font-family:inherit;pointer-events:none}
-#hh-companion-trigger{pointer-events:auto;position:relative;display:flex;align-items:center;justify-content:center;width:78px;height:78px;border:3px solid #fffdf8;border-radius:50%;padding:0;background:linear-gradient(145deg,#e9f2ec,#c4ddd0);box-shadow:0 5px 22px #102b2540;cursor:pointer;overflow:hidden;transition:transform .18s ease,box-shadow .18s ease}
-#hh-companion-trigger:hover{transform:translateY(-3px);box-shadow:0 8px 24px #102b2550}
-#hh-companion-trigger:active{transform:scale(.96)}
-#hh-companion-trigger img{width:100%;height:100%;object-fit:cover;object-position:center 30%;animation:hhHorseBreathe 3.4s ease-in-out infinite}
-#hh-companion-trigger img.hh-cartoon{filter:url(#hh-cartoon-filter) saturate(1.05) contrast(1.04);animation:hhHorseBreathe 3.1s ease-in-out infinite,hhHorseNod 5.8s ease-in-out infinite}
-#hh-companion-trigger .hh-default-horse{font-size:43px;line-height:1;filter:drop-shadow(0 2px 1px #fff)}
-#hh-companion-trigger .hh-blink{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:42px;opacity:0;pointer-events:none;animation:hhBlink 6.8s infinite}
-#hh-companion-trigger .hh-companion-dot{position:absolute;right:1px;top:2px;width:15px;height:15px;border:2px solid white;border-radius:50%;background:#d6a33b}
-#hh-companion-bubble{pointer-events:none;position:absolute;right:0;bottom:88px;width:min(270px,calc(100vw - 36px));padding:14px 15px;background:#fffdf8;color:#242923;border:1px solid #e8e0d3;border-radius:18px 18px 5px 18px;box-shadow:0 8px 28px #102b2528;font-size:14px;line-height:1.45;display:none}
-#hh-companion-bubble.open{display:block;animation:hhBubbleIn .18s ease-out}
-#hh-companion-bubble strong{display:block;margin-bottom:4px;color:#245d55;font-size:14px}
-#hh-companion-bubble p{margin:0 0 10px}
-#hh-companion-bubble .hh-actions{display:flex;gap:7px;flex-wrap:wrap}
-#hh-companion-bubble button{pointer-events:auto;border:0;border-radius:10px;padding:8px 10px;background:#245d55;color:white;font:inherit;font-size:12px;cursor:pointer}
-#hh-companion-bubble button.secondary{background:#f1ece3;color:#343832}
-#hh-companion-panel{pointer-events:auto;display:none;position:absolute;right:0;bottom:88px;width:min(360px,calc(100vw - 32px));max-height:min(78vh,660px);overflow:auto;background:#fffdf8;color:#252822;border:1px solid #e6ded1;border-radius:20px;box-shadow:0 12px 36px #102b2535;padding:17px}
-#hh-companion-panel.open{display:block;animation:hhBubbleIn .18s ease-out}
-#hh-companion-panel h3{margin:0 0 5px;font-size:18px}
-#hh-companion-panel .hh-muted{color:#74776f;font-size:12px;margin:0 0 14px}
-#hh-companion-panel label{display:block;font-size:13px;font-weight:650;margin:12px 0 5px}
-#hh-companion-panel select,#hh-companion-panel input[type=checkbox]{accent-color:#245d55}
-#hh-companion-panel select{width:100%;padding:10px;border:1px solid #ddd4c6;border-radius:10px;background:white;color:#252822;font:inherit}
-#hh-companion-panel .hh-check{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:400;margin:9px 0}
-#hh-companion-panel .hh-panel-actions{display:flex;gap:8px;margin-top:15px}
-#hh-companion-panel button{flex:1;border:0;border-radius:11px;padding:10px;background:#245d55;color:white;font:inherit;cursor:pointer}
-#hh-companion-panel button.secondary{background:#f0ebe2;color:#30342f}
-#hh-companion-panel .hh-preview{display:flex;align-items:center;gap:12px;padding:10px;background:#f5f1e8;border-radius:14px;margin-top:10px}
-#hh-companion-panel .hh-preview img{width:58px;height:58px;border-radius:50%;object-fit:cover;object-position:center 30%}
-#hh-companion-panel .hh-preview .hh-preview-emoji{font-size:38px;width:58px;text-align:center}
-#hh-companion-panel .hh-preview small{display:block;color:#77786f;margin-top:3px}
-#hh-companion-panel .hh-photo-area{display:flex;gap:12px;align-items:flex-start;background:#f5f1e8;padding:12px;border-radius:14px;margin-top:9px}
-#hh-companion-panel .hh-photo-preview{width:105px;height:125px;flex:0 0 105px;overflow:hidden;border-radius:12px;background:linear-gradient(160deg,#dbe7df,#eef1ea);display:flex;align-items:center;justify-content:center;border:1px solid #ddd5c9}
-#hh-companion-panel .hh-photo-preview img{width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block}
-#hh-companion-panel .hh-photo-placeholder{font-size:48px;opacity:.65}
-#hh-companion-panel .hh-photo-copy{min-width:0}
-#hh-companion-panel .hh-photo-copy>b{display:block;font-size:13px}
-#hh-companion-panel .hh-photo-copy small{display:block;color:#6f726b;font-size:11px;line-height:1.35;margin-top:4px}
-#hh-companion-panel .hh-upload-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}
-#hh-companion-panel .hh-upload-btn{display:inline-flex!important;align-items:center;justify-content:center;background:#245d55;color:#fff;border-radius:10px;padding:8px 9px!important;margin:0!important;font-size:11px!important;font-weight:650!important;cursor:pointer}
-#hh-companion-panel .hh-upload-btn input{display:none}
-#hh-companion-panel .hh-upload-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:7px}
-#hh-companion-panel .hh-upload-actions button{flex:0 0 auto;font-size:11px;padding:8px 9px}
-#hh-companion-panel .hh-style-note{background:#edf4ef;color:#536059;border-radius:10px;padding:9px;font-size:11px;line-height:1.4;margin-top:8px}
-@keyframes hhHorseBreathe{0%,100%{transform:scale(1) translateY(0)}50%{transform:scale(1.025) translateY(-1px)}}
-@keyframes hhHorseNod{0%,100%{transform:scale(1) rotate(0deg) translateY(0)}23%{transform:scale(1.02) rotate(-1.2deg) translateY(-1px)}46%{transform:scale(1.025) rotate(.8deg) translateY(0)}72%{transform:scale(1.01) rotate(-.5deg)}}
-@keyframes hhBlink{0%,47%,49%,100%{opacity:0}48%{opacity:.95}}
-@keyframes hhBubbleIn{from{opacity:0;transform:translateY(6px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
-@media(max-width:520px){#hh-companion-root{right:10px;bottom:calc(78px + env(safe-area-inset-bottom,0px))}#hh-companion-trigger{width:66px;height:66px}#hh-companion-bubble,#hh-companion-panel{bottom:76px}#hh-companion-panel{width:min(370px,calc(100vw - 20px));padding:14px}#hh-companion-panel .hh-photo-area{gap:9px}#hh-companion-panel .hh-photo-preview{width:92px;height:112px;flex-basis:92px}}
-@media(prefers-reduced-motion:reduce){#hh-companion-trigger img,#hh-companion-trigger .hh-blink{animation:none}#hh-companion-bubble.open,#hh-companion-panel.open{animation:none}}
-#horseCompanionSettingsHost{margin-top:10px}
-#horseCompanionSettingsHost .hh-settings-inline{display:flex;gap:14px;align-items:flex-start;background:#f5f1e8;border:1px solid #e4dccf;border-radius:15px;padding:12px}
-#horseCompanionSettingsHost .hh-settings-inline-photo{width:116px;height:138px;flex:0 0 116px;border-radius:13px;overflow:hidden;background:linear-gradient(160deg,#dbe7df,#eef1ea);display:flex;align-items:center;justify-content:center;border:1px solid #ddd5c9}
-#horseCompanionSettingsHost .hh-settings-inline-photo img{width:100%;height:100%;object-fit:cover;object-position:center 30%}
-#horseCompanionSettingsHost .hh-settings-inline-placeholder{font-size:50px;opacity:.65}
-#horseCompanionSettingsHost .hh-settings-inline-main{min-width:0;flex:1}
-#horseCompanionSettingsHost .hh-settings-inline-main label{display:block;font-size:13px;font-weight:700;margin:0 0 5px}
-#horseCompanionSettingsHost .hh-settings-inline-main select{width:100%;padding:10px;border:1px solid #ddd4c6;border-radius:10px;background:#fff;color:#252822;font:inherit;margin-bottom:7px}
-#horseCompanionSettingsHost .hh-settings-upload{margin-top:3px}
-#horseCompanionSettingsHost .hh-settings-help{font-size:11px;line-height:1.4;color:#6e726b;margin:7px 0}
-#horseCompanionSettingsHost .hh-upload-actions{display:flex;gap:7px;flex-wrap:wrap}
-#horseCompanionSettingsHost .hh-upload-actions button{flex:0 0 auto;padding:8px 9px;border:0;border-radius:10px;background:#f0ebe2;color:#30342f;font:inherit;font-size:11px;cursor:pointer}
-@media(max-width:520px){#horseCompanionSettingsHost .hh-settings-inline{gap:9px;padding:10px}#horseCompanionSettingsHost .hh-settings-inline-photo{width:88px;height:108px;flex-basis:88px}#horseCompanionSettingsHost .hh-upload-btn{font-size:10px!important;padding:7px 8px!important}}
-/* HorseHub 1.27.0 – local AI companion UI */
-.hh-ai3d{filter:saturate(1.02) contrast(1.02);animation:hhHorseBreathe 3.2s ease-in-out infinite,hhHorseNod 6.2s ease-in-out infinite}
-.hh-ai-card{margin:12px 0;padding:12px;border-radius:14px;background:linear-gradient(160deg,#eef4ef,#f7f2e8);border:1px solid #dce5dc}
-.hh-ai-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
-.hh-ai-head>b{font-size:13px}.hh-ai-head small{display:block;color:#697068;font-size:10px;margin-top:3px}
-.hh-ai-badge{font-size:9px;letter-spacing:.06em;font-weight:800;padding:5px 7px;border-radius:999px;background:#dcece0;color:#34583c}
-.hh-ai-result{display:flex;align-items:center;gap:10px;margin-top:10px;padding:8px;border-radius:11px;background:#fffdf8;border:1px solid #e5ded2}
-.hh-ai-result img{width:70px;height:70px;object-fit:cover;border-radius:10px;object-position:center}
-.hh-ai-result b{display:block;font-size:12px}.hh-ai-result small{display:block;color:#74776f;font-size:10px;margin-top:3px}
-.hh-ai-note{font-size:10px;line-height:1.45;color:#5f655e;margin:10px 0}
-.hh-ai-card>button{width:100%;background:#245d55;color:#fff}
-@media(max-width:520px){.hh-ai-result img{width:62px;height:62px}}
-/* HorseHub 1.28.0 – integrated local AI states */
-.hh-ai-actions{display:flex;gap:7px;flex-wrap:wrap}.hh-ai-actions button{flex:1 1 150px}.hh-ai-actions button.secondary{flex:0 1 auto;background:#f0ebe2;color:#30342f}
-.hh-companion-status{margin-top:8px;padding:8px 10px;border-radius:10px;background:#f2eee6;color:#555a53;font-size:11px;line-height:1.4;min-height:32px}.hh-companion-status.ok{background:#edf4ee;color:#355a3d}.hh-companion-status.warn{background:#fff1df;color:#7b5423}
-.hh-ai-fallback{margin-top:8px;padding:8px 10px;border-radius:10px;background:#f8f4ec;color:#6c7068;font-size:10px;line-height:1.4}
-.hh-ai-running{outline:2px solid #d9a21b55}
-.hh-settings-help{background:#f5f1e9;color:#62675f;border-radius:10px;padding:9px;font-size:10px;line-height:1.4;margin-top:8px}
-
-.hh-ai-tech{margin-top:7px;font-size:9px;color:#647068;letter-spacing:.01em}
+.hh-companion-root{} 
+#hh-companion-root{position:fixed;inset:0;pointer-events:none;z-index:9999;font-family:inherit}
+#hh-companion-trigger{pointer-events:auto;position:fixed;right:16px;bottom:calc(76px + env(safe-area-inset-bottom));width:118px;height:142px;border:0;background:transparent;padding:0;cursor:pointer;filter:drop-shadow(0 8px 14px #0003)}
+#hh-companion-root.left #hh-companion-trigger{right:auto;left:16px}
+.hh-vector-wrap{width:100%;height:100%;position:relative;display:grid;place-items:center}
+.hh-vector-wrap svg{width:100%;height:100%;overflow:visible}
+.hh-horse-idle{transform-origin:50% 92%;animation:hh-breathe 3.6s ease-in-out infinite}
+.hh-head{transform-origin:55% 62%;animation:hh-head 6s ease-in-out infinite}
+.hh-ear-l{transform-origin:75% 35%;animation:hh-ear-l 5.2s ease-in-out infinite}
+.hh-ear-r{transform-origin:33% 36%;animation:hh-ear-r 5.8s ease-in-out infinite}
+.hh-eye{transform-origin:center;animation:hh-blink 5.5s infinite}
+.hh-tail{transform-origin:12% 73%;animation:hh-tail 3.2s ease-in-out infinite}
+.hh-mane{transform-origin:30% 55%;animation:hh-mane 4.5s ease-in-out infinite}
+.hh-leg-a{transform-origin:50% 15%;animation:hh-leg 4.2s ease-in-out infinite}
+.hh-leg-b{transform-origin:50% 15%;animation:hh-leg 4.2s .25s ease-in-out infinite}
+@keyframes hh-breathe{0%,100%{transform:translateY(0) scaleY(1)}50%{transform:translateY(-2px) scaleY(1.012)}}
+@keyframes hh-head{0%,100%{transform:rotate(0)}25%{transform:rotate(-2deg)}52%{transform:rotate(1.2deg)}78%{transform:rotate(-.8deg)}}
+@keyframes hh-ear-l{0%,100%{transform:rotate(0)}18%{transform:rotate(7deg)}28%{transform:rotate(-3deg)}65%{transform:rotate(3deg)}}
+@keyframes hh-ear-r{0%,100%{transform:rotate(0)}22%{transform:rotate(-6deg)}34%{transform:rotate(2deg)}72%{transform:rotate(-3deg)}}
+@keyframes hh-blink{0%,45%,48%,100%{transform:scaleY(1)}46%,47%{transform:scaleY(.08)}}
+@keyframes hh-tail{0%,100%{transform:rotate(0)}35%{transform:rotate(9deg)}68%{transform:rotate(-8deg)}}
+@keyframes hh-mane{0%,100%{transform:skewY(0)}50%{transform:skewY(1.5deg)}}
+@keyframes hh-leg{0%,100%{transform:rotate(0)}50%{transform:rotate(2deg)}}
+.hh-companion-bubble{position:fixed;right:20px;bottom:calc(212px + env(safe-area-inset-bottom));max-width:250px;background:#fffdf8;border:1px solid #d8ccb9;border-radius:18px 18px 4px 18px;padding:11px 14px;box-shadow:0 8px 24px #0002;pointer-events:auto;color:#2e2a26}.left .hh-companion-bubble{right:auto;left:20px;border-radius:18px 18px 18px 4px}
+.hh-bubble-title{font-weight:800;margin-bottom:3px}.hh-bubble-text{font-size:13px;line-height:1.35}
+#hh-companion-panel{pointer-events:auto;position:fixed;right:14px;bottom:calc(212px + env(safe-area-inset-bottom));width:min(390px,calc(100vw - 28px));max-height:min(72vh,650px);overflow:auto;background:#fffdf9;border:1px solid #d9cdbd;border-radius:20px;padding:15px;box-shadow:0 14px 38px #0003}
+.left #hh-companion-panel{right:auto;left:14px}
+.hh-muted{color:#6d665e;font-size:13px}.hh-companion-panel-title{display:flex;justify-content:space-between;align-items:center}.hh-catalog{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:10px}.hh-catalog-card{border:1px solid #ded3c5;border-radius:15px;background:#fff;padding:7px;text-align:left;cursor:pointer;transition:.15s}.hh-catalog-card.selected{border:2px solid #8a6a3d;background:#fbf4e8}.hh-catalog-card:active{transform:scale(.98)}.hh-catalog-preview{height:120px;border-radius:11px;background:linear-gradient(#edf0eb,#f8f4ec);overflow:hidden}.hh-catalog-name{font-weight:800;font-size:13px;margin-top:6px}.hh-catalog-meta{font-size:11px;color:#756e66;margin-top:2px}.hh-section{margin-top:14px}.hh-row-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.hh-row-actions button{flex:1;min-width:120px}.hh-check{display:flex;gap:8px;align-items:center;padding:6px 0;font-size:13px}.hh-check input{width:auto}.hh-companion-status{margin-top:8px;padding:8px 10px;border-radius:10px;background:#f3eee6;font-size:12px}.hh-companion-status.ok{background:#e8f4e8;color:#245b2b}.hh-companion-status.warn{background:#fff0e8;color:#7a3c25}
+.hh-settings-inline{display:grid;grid-template-columns:100px 1fr;gap:12px;align-items:start}.hh-settings-inline-photo{width:100px;height:100px;border-radius:14px;background:#eee8dc;overflow:hidden;display:grid;place-items:center}.hh-settings-inline-photo img{width:100%;height:100%;object-fit:cover}.hh-settings-inline-placeholder{font-size:40px}.hh-selection-note{font-size:12px;color:#6d665e;margin-top:6px}
+.hh-reaction-happy{animation:hh-pop .55s ease}.hh-reaction-curious{animation:hh-curious .8s ease}.hh-reaction-reminder{animation:hh-reminder .7s ease}.hh-reaction-calm{animation:hh-calm 1.4s ease}
+@keyframes hh-pop{50%{transform:scale(1.12) translateY(-6px)}}@keyframes hh-curious{30%{transform:rotate(-7deg)}65%{transform:rotate(5deg)}}@keyframes hh-reminder{25%{transform:translateX(-5px)}50%{transform:translateX(5px)}75%{transform:translateX(-3px)}}@keyframes hh-calm{50%{transform:translateY(-4px)}}
+@media(max-width:480px){#hh-companion-trigger{width:105px;height:126px;right:9px}.hh-companion-bubble{right:10px;bottom:calc(190px + env(safe-area-inset-bottom));max-width:220px}.hh-catalog{grid-template-columns:repeat(2,1fr)}#hh-companion-panel{right:8px;width:calc(100vw - 16px);bottom:calc(190px + env(safe-area-inset-bottom))}}
