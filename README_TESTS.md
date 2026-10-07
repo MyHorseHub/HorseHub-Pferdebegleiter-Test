@@ -98,11 +98,11 @@ Blink-Animation umgedreht: Das obere Lid beginnt an der oberen Ausgangskante und
 - Beide Augen werden weiterhin synchron animiert.
 
 
-## 1.55.0 – Ohr-Test
+## 1.56.0 – Ohr-Test
 Das perfekte Blinzeln aus 1.50.0 bleibt unverändert. Für die Ohren wurde nur eine sehr kleine Overlay-Bewegung ergänzt: Die Originalohren bleiben in der Ruheposition exakt deckungsgleich; die animierten Ohrbewegungen sind bewusst auf wenige Grad begrenzt, um kein erneutes Verschieben des Charakters zu provozieren.
 
 
-## 1.55.0 – Service-Worker Notausstieg
-- Neuer Service Worker: `sw-1.55.0.js`
+## 1.56.0 – Service-Worker Notausstieg
+- Neuer Service Worker: `sw-1.56.0.js`
 - `clear-cache.html` entfernt alte HorseHub-Service-Worker/Cache-Daten und lädt die App neu.
 - Animation und Augen/Ears unverändert gegenüber 1.54.0.
